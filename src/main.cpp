@@ -22,8 +22,13 @@ int main() {
                 break;
             }
         }
-    //    SDL_RenderPresent 
+        // Present the framebuffer to the screen
+        SDL_RenderPresent(renderer);
     }
-    
 
+    // Quit SDL
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+    return 0;
 }
