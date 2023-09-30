@@ -6,8 +6,9 @@
 #include <vector>
 
 struct Player {
-    int x;
-    int y;
+    int x;      // X Position
+    int y;      // Y Position
+    float a;    // Angle
 };
 
 class RayCaster {
