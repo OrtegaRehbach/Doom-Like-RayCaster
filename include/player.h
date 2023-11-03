@@ -21,22 +21,22 @@ struct Player {
 	}
 
     void moveLeft() {
-        float turnAngle = a + M_PI / 2;
-		x += movementSpeed * cos(turnAngle);
-		y += movementSpeed * sin(turnAngle);
-	}
-
-    void moveRight() {
         float turnAngle = a - M_PI / 2;
 		x += movementSpeed * cos(turnAngle);
 		y += movementSpeed * sin(turnAngle);
 	}
 
+    void moveRight() {
+        float turnAngle = a + M_PI / 2;
+		x += movementSpeed * cos(turnAngle);
+		y += movementSpeed * sin(turnAngle);
+	}
+
 	void turnLeft() {
-		a += M_PI / turningSpeed;
+		a -= M_PI / turningSpeed;
 	}
 
 	void turnRight() {
-		a -= M_PI / turningSpeed;
+		a += M_PI / turningSpeed;
 	}
 };
