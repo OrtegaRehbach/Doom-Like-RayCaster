@@ -103,6 +103,26 @@ public:
 		SDL_RenderFillRect(renderer, &rect);
 	}
 
+	float get_intensity(float d) {
+		float minViewDistance = 250.0f;
+		float maxViewDistance = 650.0f;
+		int stepAmount = 4;
+		float stepSize = (maxViewDistance - minViewDistance) / stepAmount;
+		if (d < minViewDistance)
+			return 1.0f;
+		if (d > maxViewDistance)
+			return 0.0f;
+		if (d >= minViewDistance && d < minViewDistance + stepSize)
+			return 0.75f;
+		if (d >= minViewDistance + stepSize && d < minViewDistance + stepSize * 2)
+			return 0.5f;
+		if (d >= minViewDistance + stepSize * 2 && d < minViewDistance + stepSize * 3)
+			return 0.25f;
+		if (d >= minViewDistance + stepSize * 3 && d <= minViewDistance + stepSize * 4)
+			return 0.10f;
+		return 1.0f;
+	}
+
 	void render() {
 		// draw left side of the screen
 
@@ -130,6 +150,7 @@ public:
 			Impact impact = cast_ray(a);
 			float d = impact.d;
 			Color c = impact.c;
+			c = c * get_intensity(d);
 
 			if (d == 0) {
 				std::cout << "you lose" << std::endl;
