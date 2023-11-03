@@ -9,6 +9,7 @@
 #include <SDL2/SDL.h>
 #include <unordered_map>
 #include "color.h"
+#include "player.h"
 
 const Color B(0, 0, 0);
 const Color W;
@@ -17,12 +18,6 @@ const int SCREEN_WIDTH = 500;
 const int SCREEN_HEIGHT = 500;
 const int BLOCK = 25;
 
-struct Player {
-	int x;
-	int y;
-	float a;
-	float fov;
-};
 
 std::unordered_map<std::string, Color> colors = {
 	{"0", Color(3, 150, 208)},
@@ -38,6 +33,8 @@ struct Impact {
 
 class Raycaster {
 public:
+	Player player;
+
 	Raycaster(SDL_Renderer *renderer)
 		: renderer(renderer) {
 
@@ -46,6 +43,9 @@ public:
 
 		player.a = M_PI / 4.0f;
 		player.fov = M_PI / 3.0f;
+
+		player.movementSpeed = 6;
+		player.turningSpeed = 48.0f;
 
 		scale = 100;
 	}
@@ -140,8 +140,6 @@ public:
 			draw_stake(x, h, c);
 		}
 	}
-
-	Player player;
 
 private:
 	int scale;

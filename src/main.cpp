@@ -34,22 +34,22 @@ int main() {
             if (event.type == SDL_KEYDOWN) {
                 switch (event.key.keysym.sym) {
                 case SDLK_LEFT:
-                    r.player.x -= 10;
+                    r.player.turnLeft();
                     break;
                 case SDLK_RIGHT:
-                    r.player.x += 10;
+                    r.player.turnRight();
                     break;
-                case SDLK_UP:
-                    r.player.y -= 10;
+                case SDLK_w:
+                    r.player.moveForward();
                     break;
-                case SDLK_DOWN:
-                    r.player.y += 10;
+                case SDLK_s:
+                    r.player.moveBackward();
                     break;
                 case SDLK_a:
-                    r.player.a += 3.14 / 12;
+                    r.player.moveLeft();
                     break;
                 case SDLK_d:
-                    r.player.a -= 3.14 / 12;
+                    r.player.moveRight();
                     break;
                 default:
                     break;
