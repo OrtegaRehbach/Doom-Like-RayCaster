@@ -33,34 +33,34 @@ struct Color {
     }
 
     Color operator+(const Color& other) const {
-        int r = static_cast<int>(r) + static_cast<int>(other.r);
-        int g = static_cast<int>(g) + static_cast<int>(other.g);
-        int b = static_cast<int>(b) + static_cast<int>(other.b);
-        int a = static_cast<int>(a) + static_cast<int>(other.a);
+        int _r = static_cast<int>(r) + static_cast<int>(other.r);
+        int _g = static_cast<int>(g) + static_cast<int>(other.g);
+        int _b = static_cast<int>(b) + static_cast<int>(other.b);
+        int _a = static_cast<int>(a) + static_cast<int>(other.a);
 
-        r = (r > 255) ? 255 : ((r < 0) ? 0 : r);
-        g = (g > 255) ? 255 : ((g < 0) ? 0 : g);
-        b = (b > 255) ? 255 : ((b < 0) ? 0 : b);
-        a = (a > 255) ? 255 : ((a < 0) ? 0 : a);
+        _r = (_r > 255) ? 255 : ((_r < 0) ? 0 : _r);
+        _g = (_g > 255) ? 255 : ((_g < 0) ? 0 : _g);
+        _b = (_b > 255) ? 255 : ((_b < 0) ? 0 : _b);
+        _a = (_a > 255) ? 255 : ((_a < 0) ? 0 : _a);
 
-        return Color(r, g, b, a);
+        return Color(_r, _g, _b, _a);
     }
 
     Color operator*(float scalar) const {
-        Uint8 r = static_cast<Uint8>(r * scalar);
-        Uint8 g = static_cast<Uint8>(g * scalar);
-        Uint8 b = static_cast<Uint8>(b * scalar);
-        Uint8 a = static_cast<Uint8>(a * scalar);
-        return Color(r, g, b, a);
+        Uint8 _r = static_cast<Uint8>(r * scalar);
+        Uint8 _g = static_cast<Uint8>(g * scalar);
+        Uint8 _b = static_cast<Uint8>(b * scalar);
+        Uint8 _a = static_cast<Uint8>(a * scalar);
+        return Color(_r, _g, _b, _a);
     }
 
     Color operator*(Color other) const {
-        Uint8 r = static_cast<Uint8>((r * other.r) / 255);
-        Uint8 g = static_cast<Uint8>((g * other.g) / 255);
-        Uint8 b = static_cast<Uint8>((b * other.b) / 255);
-        Uint8 a = static_cast<Uint8>((a * other.a) / 255);
+        Uint8 _r = static_cast<Uint8>((r * other.r) / 255);
+        Uint8 _g = static_cast<Uint8>((g * other.g) / 255);
+        Uint8 _b = static_cast<Uint8>((b * other.b) / 255);
+        Uint8 _a = static_cast<Uint8>((a * other.a) / 255);
 
-        return Color(r, g, b, a);
+        return Color(_r, _g, _b, _a);
     }
 
     bool operator==(const Color& other) const {
