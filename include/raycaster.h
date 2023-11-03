@@ -149,8 +149,7 @@ public:
 			double a = player.a + player.fov / 2.0 - player.fov * i / SCREEN_WIDTH;
 			Impact impact = cast_ray(a);
 			float d = impact.d;
-			Color c = impact.c;
-			c = c * get_brightness(d);
+			Color c = impact.c * get_brightness(d);
 
 			if (d == 0) {
 				std::cout << "you lose" << std::endl;
