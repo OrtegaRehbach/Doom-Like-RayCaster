@@ -104,8 +104,8 @@ public:
 	}
 
 	float get_brightness(float d) {
-		float minViewDistance = 250.0f;
-		float maxViewDistance = 650.0f;
+		float minViewDistance = 350.0f;
+		float maxViewDistance = 600.0f;
 		int stepAmount = 4;
 		float stepSize = (maxViewDistance - minViewDistance) / stepAmount;
 		if (d < minViewDistance)
