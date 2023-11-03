@@ -156,7 +156,7 @@ public:
 				exit(0);
 			}
 			int x = SCREEN_WIDTH * 2 - i;
-			float h = static_cast<float>(SCREEN_HEIGHT) / static_cast<float>(d) * static_cast<float>(scale);
+			float h = static_cast<float>(SCREEN_HEIGHT) / static_cast<float>(d * cos(a - player.a)) * static_cast<float>(scale);
 			draw_stake(x, h, c);
 		}
 	}
