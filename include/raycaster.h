@@ -123,11 +123,9 @@ public:
 		return 1.0f;
 	}
 
-	void render() {
-		// draw left side of the screen
-
-		for (int x = 0; x < SCREEN_WIDTH; x += BLOCK) {
-			for (int y = 0; y < SCREEN_HEIGHT; y += BLOCK) {
+	void draw_minimap(int xPos = 0, int yPos = 0, int mapWidth = 100, int mapHeight = 100) {
+		for (int x = xPos; x < SCREEN_WIDTH; x += BLOCK) {
+			for (int y = yPos; y < SCREEN_HEIGHT; y += BLOCK) {
 				int i = static_cast<int>(x / BLOCK);
 				int j = static_cast<int>(y / BLOCK);
 				if (map[j][i] != ' ') {
@@ -142,9 +140,12 @@ public:
 			float a = player.a + player.fov / 2 - player.fov * i / SCREEN_WIDTH;
 			cast_ray(a);
 		}
+	}
 
+	void render() {
+		draw_minimap();
+		
 		// draw right side of the screen
-
 		for (int i = 0; i < SCREEN_WIDTH; i++) {
 			double a = player.a + player.fov / 2.0 - player.fov * i / SCREEN_WIDTH;
 			Impact impact = cast_ray(a);
