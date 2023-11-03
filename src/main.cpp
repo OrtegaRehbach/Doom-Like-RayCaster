@@ -65,4 +65,5 @@ int main() {
 
     SDL_DestroyWindow(window);
     SDL_Quit();
+    exit(0);
 }
