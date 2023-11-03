@@ -103,7 +103,7 @@ public:
 		SDL_RenderFillRect(renderer, &rect);
 	}
 
-	float get_intensity(float d) {
+	float get_brightness(float d) {
 		float minViewDistance = 250.0f;
 		float maxViewDistance = 650.0f;
 		int stepAmount = 4;
@@ -150,7 +150,7 @@ public:
 			Impact impact = cast_ray(a);
 			float d = impact.d;
 			Color c = impact.c;
-			c = c * get_intensity(d);
+			c = c * get_brightness(d);
 
 			if (d == 0) {
 				std::cout << "you lose" << std::endl;
