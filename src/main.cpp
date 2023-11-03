@@ -33,6 +33,9 @@ int main() {
             }
             if (event.type == SDL_KEYDOWN) {
                 switch (event.key.keysym.sym) {
+                case SDLK_ESCAPE:
+                    running = false;
+                    break;
                 case SDLK_LEFT:
                     r.player.turnLeft();
                     break;
