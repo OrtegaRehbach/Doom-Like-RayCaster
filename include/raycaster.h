@@ -13,7 +13,6 @@
 const Color B(0, 0, 0);
 const Color W;
 
-
 const int SCREEN_WIDTH = 500;
 const int SCREEN_HEIGHT = 500;
 const int BLOCK = 25;
@@ -46,7 +45,7 @@ public:
 		player.y = BLOCK + BLOCK / 2;
 
 		player.a = M_PI / 4.0f;
-		player.fov = M_PI / 4.0f;
+		player.fov = M_PI / 3.0f;
 
 		scale = 100;
 	}
