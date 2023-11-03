@@ -26,38 +26,30 @@ int main() {
     bool running = true;
     while (running) {
         SDL_Event event;
+        const Uint8* KeyboardState = SDL_GetKeyboardState(nullptr);
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 running = false;
                 break;
             }
             if (event.type == SDL_KEYDOWN) {
-                switch (event.key.keysym.sym) {
-                case SDLK_ESCAPE:
+                if (event.key.keysym.sym == SDLK_ESCAPE) {
                     running = false;
-                    break;
-                case SDLK_LEFT:
-                    r.player.turnLeft();
-                    break;
-                case SDLK_RIGHT:
-                    r.player.turnRight();
-                    break;
-                case SDLK_w:
-                    r.player.moveForward();
-                    break;
-                case SDLK_s:
-                    r.player.moveBackward();
-                    break;
-                case SDLK_a:
-                    r.player.moveLeft();
-                    break;
-                case SDLK_d:
-                    r.player.moveRight();
-                    break;
-                default:
                     break;
                 }
             }
+            if (KeyboardState[SDL_SCANCODE_LEFT])
+                r.player.turnLeft();
+            if (KeyboardState[SDL_SCANCODE_RIGHT])
+                r.player.turnRight();
+            if (KeyboardState[SDL_SCANCODE_W])
+                r.player.moveForward();
+            if (KeyboardState[SDL_SCANCODE_S])
+                r.player.moveBackward();
+            if (KeyboardState[SDL_SCANCODE_A])
+                r.player.moveLeft();
+            if (KeyboardState[SDL_SCANCODE_D])
+                r.player.moveRight();
         }
 
         clear();
