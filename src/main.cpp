@@ -38,19 +38,19 @@ int main() {
                     break;
                 }
             }
-            if (KeyboardState[SDL_SCANCODE_LEFT])
-                r.player.turnLeft();
-            if (KeyboardState[SDL_SCANCODE_RIGHT])
-                r.player.turnRight();
-            if (KeyboardState[SDL_SCANCODE_W])
-                r.player.moveForward();
-            if (KeyboardState[SDL_SCANCODE_S])
-                r.player.moveBackward();
-            if (KeyboardState[SDL_SCANCODE_A])
-                r.player.moveLeft();
-            if (KeyboardState[SDL_SCANCODE_D])
-                r.player.moveRight();
         }
+        if (KeyboardState[SDL_SCANCODE_LEFT])
+            r.player.turnLeft();
+        if (KeyboardState[SDL_SCANCODE_RIGHT])
+            r.player.turnRight();
+        if (KeyboardState[SDL_SCANCODE_W])
+            r.player.moveForward();
+        if (KeyboardState[SDL_SCANCODE_S])
+            r.player.moveBackward();
+        if (KeyboardState[SDL_SCANCODE_A])
+            r.player.moveLeft();
+        if (KeyboardState[SDL_SCANCODE_D])
+            r.player.moveRight();
 
         clear();
         r.render();
