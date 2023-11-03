@@ -153,7 +153,7 @@ public:
 
 			if (d == 0) {
 				std::cout << "you lose" << std::endl;
-				exit(1);
+				exit(0);
 			}
 			int x = SCREEN_WIDTH * 2 - i;
 			float h = static_cast<float>(SCREEN_HEIGHT) / static_cast<float>(d) * static_cast<float>(scale);
