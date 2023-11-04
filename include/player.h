@@ -39,9 +39,9 @@ struct Player {
 	}
 
     void moveLeft() {
-        float turnAngle = a - M_PI / 2;
-		int newX = x + movementSpeed * cos(turnAngle);
-		int newY = y + movementSpeed * sin(turnAngle);
+        float turnAngle = a + M_PI / 2;
+		int newX = x - movementSpeed * cos(turnAngle);
+		int newY = y - movementSpeed * sin(turnAngle);
 		if (canMove(newX, newY)) {
 			x = newX;
 			y = newY;
