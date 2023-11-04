@@ -46,6 +46,7 @@ public:
 
 		player.movementSpeed = 6;
 		player.turningSpeed = 48.0f;
+		player.blockSize = BLOCK;
 
 		scale = 100;
 	}
@@ -61,6 +62,7 @@ public:
 		} else {
 			std::cerr << "Failed to open the map file." << std::endl;
 		}
+		player.map = map;
 	}
 
 	void point(int x, int y, Color c) {
@@ -152,10 +154,10 @@ public:
 			float d = impact.d;
 			Color c = impact.c * get_brightness(d);
 
-			if (d == 0) {
-				std::cout << "you lose" << std::endl;
-				exit(0);
-			}
+			// if (d == 0) {
+			// 	std::cout << "you lose" << std::endl;
+			// 	exit(0);
+			// }
 			int x = SCREEN_WIDTH * 2 - i;
 			float h = static_cast<float>(SCREEN_HEIGHT) / static_cast<float>(d * cos(a - player.a)) * static_cast<float>(scale);
 			draw_stake(x, h, c);
