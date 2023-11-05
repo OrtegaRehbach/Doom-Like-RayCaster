@@ -77,7 +77,7 @@ public:
 		SDL_RenderFillRect(renderer, &rect);
 	}
 
-	Impact cast_ray(float a, bool drawRay = false, const Color& c = W) {
+	Impact cast_ray(float a, bool drawRay = false, const Color& c = W, int drawDistance = MAX_RAY_DISTANCE) {
 		float d = 0;
 		std::string mapHit;
 		while (d <= MAX_RAY_DISTANCE) {
@@ -92,7 +92,7 @@ public:
 				break;
 			}
 
-			if (drawRay)
+			if (drawRay && d <= drawDistance)
 				point(x, y, c);
 
 			d += 1;
