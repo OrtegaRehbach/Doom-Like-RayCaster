@@ -76,7 +76,7 @@ public:
 		SDL_RenderFillRect(renderer, &rect);
 	}
 
-	Impact cast_ray(float a) {
+	Impact cast_ray(float a, bool drawRay = false, const Color& c = W) {
 		float d = 0;
 		std::string mapHit;
 		while (true) {
@@ -91,7 +91,8 @@ public:
 				break;
 			}
 
-			point(x, y, W);
+			if (drawRay)
+				point(x, y, c);
 
 			d += 1;
 		}
@@ -146,6 +147,8 @@ public:
 
 	void render() {
 		draw_minimap();
+		cast_ray(player.a, true, Color(255, 0, 2));
+		std::cout << "player angle: " << player.a * (180 / M_PI) << std::endl;
 		
 		// draw right side of the screen
 		for (int i = 0; i < SCREEN_WIDTH; i++) {
