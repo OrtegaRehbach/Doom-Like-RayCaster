@@ -148,7 +148,7 @@ public:
 
 	void render() {
 		draw_minimap();
-		cast_ray(player.a, true, Color(255, 0, 2));
+		cast_ray(player.a, true, Color(255, 0, 0));
 		std::cout << "player angle: " << player.a * (180 / M_PI) << std::endl;
 		
 		// draw right side of the screen
