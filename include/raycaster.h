@@ -149,7 +149,6 @@ public:
 	void render() {
 		draw_minimap();
 		cast_ray(player.a, true, Color(255, 0, 0));
-		std::cout << "player angle: " << player.a * (180 / M_PI) << std::endl;
 		
 		// draw right side of the screen
 		for (int i = 0; i < SCREEN_WIDTH; i++) {
@@ -158,10 +157,6 @@ public:
 			float d = impact.d;
 			Color c = impact.c * get_brightness(d);
 
-			// if (d == 0) {
-			// 	std::cout << "you lose" << std::endl;
-			// 	exit(0);
-			// }
 			int x = SCREEN_WIDTH * 2 - i;
 			float h = static_cast<float>(SCREEN_HEIGHT) / static_cast<float>(d * cos(a - player.a)) * static_cast<float>(scale);
 			draw_stake(x, h, c);
