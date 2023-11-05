@@ -17,6 +17,7 @@ const Color W;
 const int SCREEN_WIDTH = 500;
 const int SCREEN_HEIGHT = 500;
 const int BLOCK = 25;
+const int MAX_RAY_DISTANCE = 10000;
 
 
 std::unordered_map<std::string, Color> colors = {
@@ -79,7 +80,7 @@ public:
 	Impact cast_ray(float a, bool drawRay = false, const Color& c = W) {
 		float d = 0;
 		std::string mapHit;
-		while (true) {
+		while (d <= MAX_RAY_DISTANCE) {
 			int x = static_cast<int>(player.x + d * cos(a));
 			int y = static_cast<int>(player.y + d * sin(a));
 
