@@ -12,6 +12,11 @@ struct Player {
 	int blockSize;
 	std::vector<std::string> map;
 
+	void move(int _x, int _y) {
+		x = _x;
+		y = _y;
+	}
+
 	bool canMove(int newX, int newY) {
 		int i = static_cast<int>(newX / blockSize);
 		int j = static_cast<int>(newY / blockSize);
@@ -23,39 +28,31 @@ struct Player {
 	void moveForward() {
 		int newX = x + movementSpeed * cos(a);
 		int newY = y + movementSpeed * sin(a);
-		if (canMove(newX, newY)) {
-			x = newX;
-			y = newY;
-		}
+		if (canMove(newX, newY))
+			move(newX, newY);
 	}
 
 	void moveBackward() {
 		int newX = x - movementSpeed * cos(a);
 		int newY = y - movementSpeed * sin(a);
-		if (canMove(newX, newY)) {
-			x = newX;
-			y = newY;
-		}
+		if (canMove(newX, newY))
+			move(newX, newY);
 	}
 
     void moveLeft() {
-        float turnAngle = a + M_PI / 2;
-		int newX = x - movementSpeed * cos(turnAngle);
-		int newY = y - movementSpeed * sin(turnAngle);
-		if (canMove(newX, newY)) {
-			x = newX;
-			y = newY;
-		}
+        float turnAngle = a - M_PI / 2;
+		int newX = x + movementSpeed * cos(turnAngle);
+		int newY = y + movementSpeed * sin(turnAngle);
+		if (canMove(newX, newY))
+			move(newX, newY);
 	}
 
     void moveRight() {
         float turnAngle = a + M_PI / 2;
 		int newX = x + movementSpeed * cos(turnAngle);
 		int newY = y + movementSpeed * sin(turnAngle);
-		if (canMove(newX, newY)) {
-			x = newX;
-			y = newY;
-		}
+		if (canMove(newX, newY))
+			move(newX, newY);
 	}
 
 	void turnLeft() {
