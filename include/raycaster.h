@@ -8,6 +8,7 @@
 #include <cmath>
 #include <SDL2/SDL.h>
 #include <unordered_map>
+
 #include "color.h"
 #include "player.h"
 
@@ -45,8 +46,8 @@ public:
 		player.a = M_PI / 4.0f;
 		player.fov = M_PI / 3.0f;
 
-		player.movementSpeed = 6;
-		player.turningSpeed = 48.0f;
+		player.movementSpeed = 200;
+		player.turningSpeed = 1.5f;
 		player.blockSize = BLOCK;
 
 		scale = 100;
