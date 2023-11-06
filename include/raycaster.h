@@ -154,10 +154,11 @@ public:
 	void draw_minimap(int xPos = 0, int yPos = 0, int mapWidth = 500, int mapHeight = 500) {
 		int blockAmount = SCREEN_WIDTH / BLOCK;
 		int minimapBlockSize = mapWidth / blockAmount;
+		rect(xPos, yPos, mapWidth, B);	// Draw minimap background
 		for (int x = xPos; x < xPos + mapWidth; x += minimapBlockSize) {
 			for (int y = yPos; y < yPos + mapHeight; y += minimapBlockSize) {
-				int i = static_cast<int>(x / minimapBlockSize);
-				int j = static_cast<int>(y / minimapBlockSize);
+				int i = static_cast<int>((x - xPos) / minimapBlockSize);
+				int j = static_cast<int>((y - yPos) / minimapBlockSize);
 				if (map[j][i] != ' ') {
 					std::string mapHit;
 					mapHit = map[j][i];
@@ -168,8 +169,8 @@ public:
 		}
 		float mapScaleFactorX = (float)mapWidth / (float)SCREEN_WIDTH;
 		float mapScaleFactorY = (float)mapHeight / (float)SCREEN_HEIGHT;
-		int playerPosX = mapScaleFactorX * player.x;
-		int playerPosY = mapScaleFactorY * player.y;
+		int playerPosX = xPos + mapScaleFactorX * player.x;
+		int playerPosY = yPos + mapScaleFactorY * player.y;
 		for (int i = 1; i < mapWidth; i++) {
 			float a = player.a + player.fov / 2 - player.fov * i / mapWidth;
 			if (i == 1 || i == mapWidth - 1)
@@ -178,9 +179,7 @@ public:
 		cast_ray_from_point(playerPosX, playerPosY, player.a, true, Color(255, 0, 0), MAX_RAY_DISTANCE, minimapBlockSize);
 	}
 
-	void render() {
-		draw_minimap(0, 0, 200, 200);
-		
+	void render() {		
 		// draw right side of the screen
 		for (int i = 0; i < SCREEN_WIDTH; i++) {
 			double a = player.a + player.fov / 2.0 - player.fov * i / SCREEN_WIDTH;
@@ -189,9 +188,11 @@ public:
 			Color c = impact.c * get_brightness(d);
 
 			int x = SCREEN_WIDTH * 2 - i;
+			// int x = SCREEN_WIDTH - i;
 			float h = static_cast<float>(SCREEN_HEIGHT) / static_cast<float>(d * cos(a - player.a)) * static_cast<float>(scale);
 			draw_stake(x, h, c);
 		}
+		draw_minimap(0, 0, 200, 200);
 	}
 
 private:
