@@ -3,6 +3,7 @@
 #include <SDL_render.h>
 #include <SDL_video.h>
 
+#include "globals.h"
 #include "color.h"
 #include "raycaster.h"
 
@@ -22,6 +23,9 @@ int main() {
 
     Raycaster r = {renderer};
     r.load_map("../assets/map.txt");
+
+    uint64_t perfFrequency = SDL_GetPerformanceFrequency();
+    uint64_t frameStart = SDL_GetPerformanceCounter();
 
     bool running = true;
     while (running) {
@@ -56,6 +60,13 @@ int main() {
         r.render();
 
         SDL_RenderPresent(renderer);
+
+        // Delta time
+
+        uint64_t frameEnd = SDL_GetPerformanceCounter();
+        deltaTime = (double)((frameEnd - frameStart) / (double)perfFrequency);
+        // std::cout << "Delta Time: " << deltaTime << std::endl;
+        frameStart = frameEnd;
     }
 
     SDL_DestroyWindow(window);
