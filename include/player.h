@@ -7,7 +7,7 @@
 struct Player {
 	int x;
 	int y;
-	float a;
+	double a;
 	float fov;
 	float movementSpeed;
 	float turningSpeed;
@@ -28,31 +28,31 @@ struct Player {
 	}
 
 	void moveForward() {
-		int newX = x + movementSpeed * cos(a) * deltaTime;
-		int newY = y + movementSpeed * sin(a) * deltaTime;
+		float newX = x + movementSpeed * cos(a) * deltaTime;
+		float newY = y + movementSpeed * sin(a) * deltaTime;
 		if (canMove(newX, newY))
 			move(newX, newY);
 	}
 
 	void moveBackward() {
-		int newX = x - movementSpeed * cos(a) * deltaTime;
-		int newY = y - movementSpeed * sin(a) * deltaTime;
+		float newX = x - movementSpeed * cos(a) * deltaTime;
+		float newY = y - movementSpeed * sin(a) * deltaTime;
 		if (canMove(newX, newY))
 			move(newX, newY);
 	}
 
     void moveLeft() {
-        float turnAngle = a - M_PI / 2;
-		int newX = x + movementSpeed * cos(turnAngle) * deltaTime;
-		int newY = y + movementSpeed * sin(turnAngle) * deltaTime;
+        double turnAngle = a - M_PI / 2;
+		float newX = x + movementSpeed * cos(turnAngle) * deltaTime;
+		float newY = y + movementSpeed * sin(turnAngle) * deltaTime;
 		if (canMove(newX, newY))
 			move(newX, newY);
 	}
 
     void moveRight() {
-        float turnAngle = a + M_PI / 2;
-		int newX = x + movementSpeed * cos(turnAngle) * deltaTime;
-		int newY = y + movementSpeed * sin(turnAngle) * deltaTime;
+        double turnAngle = a + M_PI / 2;
+		float newX = x + movementSpeed * cos(turnAngle) * deltaTime;
+		float newY = y + movementSpeed * sin(turnAngle) * deltaTime;
 		if (canMove(newX, newY))
 			move(newX, newY);
 	}
