@@ -62,16 +62,20 @@ int main() {
 
         SDL_RenderPresent(renderer);
 
-        // Delta time
+        // Delta time (in seconds)
 
         uint64_t frameEnd = SDL_GetPerformanceCounter();
         deltaTime = (double)((frameEnd - frameStart) / (double)perfFrequency);
         // std::cout << "Delta Time: " << deltaTime << std::endl;
+        
+        // FPS counter
+
         float fps = 1 / deltaTime;
         std::ostringstream titleStream;
         if(deltaTime > 0)
-            titleStream << "FPS: " << static_cast<int>(fps);  // Milliseconds to seconds
+            titleStream << "FPS: " << static_cast<int>(fps);
             SDL_SetWindowTitle(window, titleStream.str().c_str());
+        
         frameStart = frameEnd;
     }
 
