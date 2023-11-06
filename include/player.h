@@ -2,6 +2,8 @@
 
 #include <cmath>
 
+#include "globals.h"
+
 struct Player {
 	int x;
 	int y;
@@ -26,40 +28,40 @@ struct Player {
 	}
 
 	void moveForward() {
-		int newX = x + movementSpeed * cos(a);
-		int newY = y + movementSpeed * sin(a);
+		int newX = x + movementSpeed * cos(a) * deltaTime;
+		int newY = y + movementSpeed * sin(a) * deltaTime;
 		if (canMove(newX, newY))
 			move(newX, newY);
 	}
 
 	void moveBackward() {
-		int newX = x - movementSpeed * cos(a);
-		int newY = y - movementSpeed * sin(a);
+		int newX = x - movementSpeed * cos(a) * deltaTime;
+		int newY = y - movementSpeed * sin(a) * deltaTime;
 		if (canMove(newX, newY))
 			move(newX, newY);
 	}
 
     void moveLeft() {
         float turnAngle = a - M_PI / 2;
-		int newX = x + movementSpeed * cos(turnAngle);
-		int newY = y + movementSpeed * sin(turnAngle);
+		int newX = x + movementSpeed * cos(turnAngle) * deltaTime;
+		int newY = y + movementSpeed * sin(turnAngle) * deltaTime;
 		if (canMove(newX, newY))
 			move(newX, newY);
 	}
 
     void moveRight() {
         float turnAngle = a + M_PI / 2;
-		int newX = x + movementSpeed * cos(turnAngle);
-		int newY = y + movementSpeed * sin(turnAngle);
+		int newX = x + movementSpeed * cos(turnAngle) * deltaTime;
+		int newY = y + movementSpeed * sin(turnAngle) * deltaTime;
 		if (canMove(newX, newY))
 			move(newX, newY);
 	}
 
 	void turnLeft() {
-		a -= M_PI / turningSpeed;
+		a -= (M_PI / turningSpeed) * deltaTime;
 	}
 
 	void turnRight() {
-		a += M_PI / turningSpeed;
+		a += (M_PI / turningSpeed) * deltaTime;
 	}
 };
