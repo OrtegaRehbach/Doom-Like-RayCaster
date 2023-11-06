@@ -74,7 +74,7 @@ public:
 
 	void rect(int x, int y, int blockSize = BLOCK, Color c = W) {
 		SDL_SetRenderDrawColor(renderer, c.r, c.g, c.b, c.a);
-		SDL_Rect rect = {x, y, BLOCK, BLOCK};
+		SDL_Rect rect = {x, y, blockSize, blockSize};
 		SDL_RenderFillRect(renderer, &rect);
 	}
 
@@ -95,6 +95,29 @@ public:
 
 			if (drawRay && d <= drawDistance)
 				point(x, y, c);
+
+			d += 1;
+		}
+		return Impact{ d, colors[mapHit] };
+	}
+
+	Impact cast_ray_from_point(int x, int y, float a, bool drawRay = false, const Color& c = W, int drawDistance = MAX_RAY_DISTANCE, int blockSize = BLOCK) {
+		float d = 0;
+		std::string mapHit;
+		while (d <= MAX_RAY_DISTANCE) {
+			int _x = static_cast<int>(x + d * cos(a));
+			int _y = static_cast<int>(y + d * sin(a));
+
+			int i = static_cast<int>(_x / blockSize);
+			int j = static_cast<int>(_y / blockSize);
+
+			if (map[j][i] != ' ') {
+				mapHit = map[j][i];
+				break;
+			}
+
+			if (drawRay && d <= drawDistance)
+				point(_x, _y, c);
 
 			d += 1;
 		}
@@ -139,18 +162,23 @@ public:
 					std::string mapHit;
 					mapHit = map[j][i];
 					Color c = colors[mapHit];
-					rect(x, y, c);
+					rect(x, y, minimapBlockSize, c);
 				}
 			}
 		}
-		for (int i = 1; i < SCREEN_WIDTH; i++) {
-			float a = player.a + player.fov / 2 - player.fov * i / SCREEN_WIDTH;
-			cast_ray(a);
+		float mapScaleFactorX = (float)mapWidth / (float)SCREEN_WIDTH;
+		float mapScaleFactorY = (float)mapHeight / (float)SCREEN_HEIGHT;
+		int playerPosX = mapScaleFactorX * player.x;
+		int playerPosY = mapScaleFactorY * player.y;
+		for (int i = 1; i < mapWidth; i++) {
+			float a = player.a + player.fov / 2 - player.fov * i / mapWidth;
+			if (i == 1 || i == mapWidth - 1)
+				cast_ray_from_point(playerPosX, playerPosY, a, true, W, MAX_RAY_DISTANCE, minimapBlockSize);
 		}
 	}
 
 	void render() {
-		draw_minimap();
+		draw_minimap(0, 0, 400, 400);
 		cast_ray(player.a, true, Color(255, 0, 0));
 		
 		// draw right side of the screen
