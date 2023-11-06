@@ -175,11 +175,11 @@ public:
 			if (i == 1 || i == mapWidth - 1)
 				cast_ray_from_point(playerPosX, playerPosY, a, true, W, MAX_RAY_DISTANCE, minimapBlockSize);
 		}
+		cast_ray_from_point(playerPosX, playerPosY, player.a, true, Color(255, 0, 0), MAX_RAY_DISTANCE, minimapBlockSize);
 	}
 
 	void render() {
-		draw_minimap(0, 0, 400, 400);
-		cast_ray(player.a, true, Color(255, 0, 0));
+		draw_minimap(0, 0, 200, 200);
 		
 		// draw right side of the screen
 		for (int i = 0; i < SCREEN_WIDTH; i++) {
