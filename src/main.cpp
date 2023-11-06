@@ -2,6 +2,7 @@
 #include <SDL_events.h>
 #include <SDL_render.h>
 #include <SDL_video.h>
+#include <sstream>
 
 #include "globals.h"
 #include "color.h"
@@ -66,6 +67,11 @@ int main() {
         uint64_t frameEnd = SDL_GetPerformanceCounter();
         deltaTime = (double)((frameEnd - frameStart) / (double)perfFrequency);
         // std::cout << "Delta Time: " << deltaTime << std::endl;
+        float fps = 1 / deltaTime;
+        std::ostringstream titleStream;
+        if(deltaTime > 0)
+            titleStream << "FPS: " << static_cast<int>(fps);  // Milliseconds to seconds
+            SDL_SetWindowTitle(window, titleStream.str().c_str());
         frameStart = frameEnd;
     }
 
