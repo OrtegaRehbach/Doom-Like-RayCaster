@@ -19,7 +19,7 @@ struct Player {
 		y = _y;
 	}
 
-	bool canMove(int newX, int newY) {
+	bool canMove(float newX, float newY) {
 		int i = static_cast<int>(newX / blockSize);
 		int j = static_cast<int>(newY / blockSize);
 		if (map[j][i] != ' ')
