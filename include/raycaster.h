@@ -64,7 +64,8 @@ public:
 		} else {
 			std::cerr << "Failed to open the map file." << std::endl;
 		}
-		player.map = map;
+		loadedMap = map;
+		player.map = loadedMap;
 	}
 
 	void point(int x, int y, Color c) {
