@@ -65,6 +65,9 @@ int main() {
                 r.player.moveRight(); 
         }
         r.render();
+        if (currentGState == PAUSED) {
+            r.rect(0, 0, screenDim.width, Color(16, 16, 16, 120));
+        }
 
         SDL_RenderPresent(renderer);
 
