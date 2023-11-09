@@ -32,6 +32,7 @@ int main() {
     bool running = true;
     currentGState == IN_GAME;
     while (running) {
+        clear();
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
@@ -63,9 +64,6 @@ int main() {
             if (KeyboardState[SDL_SCANCODE_D] && !KeyboardState[SDL_SCANCODE_A])
                 r.player.moveRight(); 
         }
-        
-
-        clear();
         r.render();
 
         SDL_RenderPresent(renderer);
