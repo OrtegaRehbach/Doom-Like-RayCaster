@@ -8,16 +8,20 @@
 #include "color.h"
 #include "raycaster.h"
 
+void init() {
+    SDL_Init(SDL_INIT_VIDEO);
+    window = SDL_CreateWindow("DOOM", 0, 0, screenDim.width, screenDim.height, SDL_WINDOW_SHOWN);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+}
+
 void clear() {
     SDL_SetRenderDrawColor(renderer, B.r, B.g, B.b, B.a);
     SDL_RenderClear(renderer);
 }
 
 int main() {
-    SDL_Init(SDL_INIT_VIDEO);
-
-    window = SDL_CreateWindow("DOOM", 0, 0, screenDim.width, screenDim.height, SDL_WINDOW_SHOWN);
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    init();
 
     Raycaster r = {renderer};
     r.load_map("../assets/map.txt");
