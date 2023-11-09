@@ -15,11 +15,13 @@
 const Color B(0, 0, 0);
 const Color W;
 
-const int SCREEN_WIDTH = 500;
-const int SCREEN_HEIGHT = 500;
-const int BLOCK = 25;
+const int SCREEN_WIDTH = screenDim.width;
+const int SCREEN_HEIGHT = screenDim.height;
 const int MAX_RAY_DISTANCE = 10000;
 
+int BLOCK_AMT_X = 20;
+int BLOCK_AMT_Y = 20;
+int BLOCK = SCREEN_WIDTH / BLOCK_AMT_X;
 
 std::unordered_map<std::string, Color> colors = {
 	{"0", Color(3, 150, 208)},
@@ -54,13 +56,19 @@ public:
 	}
 
 	void load_map(const std::string &filename) {
+		int blockAmtX = 0;
+		int blockAmtY = 0;
 		std::ifstream file(filename);
 		if (file.is_open()) {
 			std::string line;
 			while (getline(file, line)) {
+				blockAmtX = (line.length() > blockAmtX) ? line.length() : blockAmtX;
 				map.push_back(line);
+				blockAmtY++;
 			}
 			file.close();
+			BLOCK_AMT_X = blockAmtX;
+			BLOCK_AMT_Y = blockAmtY;
 			loadedMap = map;
 			player.map = loadedMap;
 		} else {
