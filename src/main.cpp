@@ -80,10 +80,10 @@ int main() {
 
         float fps = 1 / deltaTime;
         std::ostringstream titleStream;
-        if(deltaTime > 0)
+        if(deltaTime > 0) {
             titleStream << "FPS: " << static_cast<int>(fps);
             SDL_SetWindowTitle(window, titleStream.str().c_str());
-        
+        }
         frameStart = frameEnd;
     }
 
