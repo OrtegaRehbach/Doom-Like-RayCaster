@@ -11,5 +11,5 @@ struct Screen {
     int height;
 };
 
-Screen screenDim = {1000, 1000};
+Screen screenDim = {800, 800};
 std::vector<std::string> loadedMap;
