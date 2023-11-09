@@ -19,7 +19,7 @@ void clear() {
 int main() {
     SDL_Init(SDL_INIT_VIDEO);
 
-    window = SDL_CreateWindow("DOOM", 0, 0, 1000, 500, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("DOOM", 0, 0, screenDim.width, screenDim.height, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     Raycaster r = {renderer};
