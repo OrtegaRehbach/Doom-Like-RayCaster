@@ -171,8 +171,7 @@ public:
 		cast_ray_from_point(playerPosX, playerPosY, player.a, true, Color(255, 0, 0), MAX_RAY_DISTANCE, minimapBlockSize);
 	}
 
-	void render() {		
-		// draw right side of the screen
+	void draw_player_view() {
 		for (int i = 0; i < SCREEN_WIDTH; i++) {
 			double a = player.a + player.fov / 2.0 - player.fov * i / SCREEN_WIDTH;
 			Impact impact = cast_ray(a);
@@ -184,6 +183,10 @@ public:
 			float h = static_cast<float>(SCREEN_HEIGHT) / static_cast<float>(d * cos(a - player.a)) * static_cast<float>(scale);
 			draw_stake(x, h, c);
 		}
+	}
+
+	void render() {		
+		draw_player_view();
 		draw_minimap(0, 0, 200, 200);
 	}
 
