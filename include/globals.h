@@ -7,6 +7,8 @@
 
 #include "color.h"
 
+SDL_Window *window;
+SDL_Renderer *renderer;
 double deltaTime;
 std::vector<std::string> loadedMap;
 std::unordered_map<std::string, Color> colorMap = {

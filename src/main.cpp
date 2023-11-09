@@ -8,9 +8,6 @@
 #include "color.h"
 #include "raycaster.h"
 
-SDL_Window *window;
-SDL_Renderer *renderer;
-
 void clear() {
     SDL_SetRenderDrawColor(renderer, B.r, B.g, B.b, B.a);
     SDL_RenderClear(renderer);
