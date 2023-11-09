@@ -26,9 +26,9 @@ int main() {
     uint64_t frameStart = SDL_GetPerformanceCounter();
 
     bool running = true;
+    currentGState == IN_GAME;
     while (running) {
         SDL_Event event;
-        const Uint8* KeyboardState = SDL_GetKeyboardState(nullptr);
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 running = false;
@@ -39,20 +39,27 @@ int main() {
                     running = false;
                     break;
                 }
+                if (event.key.keysym.sym == SDLK_p) {
+                    togglePause();
+                }
             }
         }
-        if (KeyboardState[SDL_SCANCODE_LEFT] && !KeyboardState[SDL_SCANCODE_RIGHT])
-            r.player.turnLeft();
-        if (KeyboardState[SDL_SCANCODE_RIGHT] && !KeyboardState[SDL_SCANCODE_LEFT])
-            r.player.turnRight();
-        if (KeyboardState[SDL_SCANCODE_W] && !KeyboardState[SDL_SCANCODE_S])
-            r.player.moveForward();
-        if (KeyboardState[SDL_SCANCODE_S] && !KeyboardState[SDL_SCANCODE_W])
-            r.player.moveBackward();
-        if (KeyboardState[SDL_SCANCODE_A] && !KeyboardState[SDL_SCANCODE_D])
-            r.player.moveLeft();
-        if (KeyboardState[SDL_SCANCODE_D] && !KeyboardState[SDL_SCANCODE_A])
-            r.player.moveRight();
+        if (currentGState == IN_GAME) {
+            const Uint8* KeyboardState = SDL_GetKeyboardState(nullptr);
+            if (KeyboardState[SDL_SCANCODE_LEFT] && !KeyboardState[SDL_SCANCODE_RIGHT])
+                r.player.turnLeft();
+            if (KeyboardState[SDL_SCANCODE_RIGHT] && !KeyboardState[SDL_SCANCODE_LEFT])
+                r.player.turnRight();
+            if (KeyboardState[SDL_SCANCODE_W] && !KeyboardState[SDL_SCANCODE_S])
+                r.player.moveForward();
+            if (KeyboardState[SDL_SCANCODE_S] && !KeyboardState[SDL_SCANCODE_W])
+                r.player.moveBackward();
+            if (KeyboardState[SDL_SCANCODE_A] && !KeyboardState[SDL_SCANCODE_D])
+                r.player.moveLeft();
+            if (KeyboardState[SDL_SCANCODE_D] && !KeyboardState[SDL_SCANCODE_A])
+                r.player.moveRight(); 
+        }
+        
 
         clear();
         r.render();

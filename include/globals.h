@@ -29,3 +29,16 @@ struct Impact {
 	float d;
 	Color c;
 };
+
+enum GameState {
+	IN_GAME,
+	PAUSED,
+	WIN
+};
+
+GameState currentGState;
+
+void togglePause() {
+	currentGState = (currentGState == PAUSED) ? IN_GAME : PAUSED;
+}
+
