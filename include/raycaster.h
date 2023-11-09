@@ -19,11 +19,6 @@ int BLOCK_AMT_X = 20;
 int BLOCK_AMT_Y = 20;
 int BLOCK = SCREEN_WIDTH / BLOCK_AMT_X;
 
-struct Impact {
-	float d;
-	Color c;
-};
-
 class Raycaster {
 public:
 	Player player;
