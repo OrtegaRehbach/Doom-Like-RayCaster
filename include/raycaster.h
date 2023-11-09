@@ -3,13 +3,9 @@
 #include <iostream>
 #include <fstream>
 #include <SDL_render.h>
-#include <string>
-#include <vector>
 #include <cmath>
 #include <SDL2/SDL.h>
-#include <unordered_map>
 
-#include "color.h"
 #include "player.h"
 
 const Color B(0, 0, 0);
@@ -22,13 +18,6 @@ const int MAX_RAY_DISTANCE = 10000;
 int BLOCK_AMT_X = 20;
 int BLOCK_AMT_Y = 20;
 int BLOCK = SCREEN_WIDTH / BLOCK_AMT_X;
-
-std::unordered_map<std::string, Color> colors = {
-	{"0", Color(3, 150, 208)},
-	{"1", Color(240, 200, 0)},
-	{"2", Color(220, 36, 33)},
-	{"3", Color(64, 169, 68)}
-};
 
 struct Impact {
 	float d;
@@ -107,7 +96,7 @@ public:
 
 			d += 1;
 		}
-		return Impact{ d, colors[mapHit] };
+		return Impact{ d, colorMap[mapHit] };
 	}
 
 	Impact cast_ray_from_point(int x, int y, float a, bool drawRay = false, const Color& c = W, int drawDistance = MAX_RAY_DISTANCE, int blockSize = BLOCK) {
@@ -130,7 +119,7 @@ public:
 
 			d += 1;
 		}
-		return Impact{ d, colors[mapHit] };
+		return Impact{ d, colorMap[mapHit] };
 	}
 
 	void draw_stake(int x, float h, Color c) {
@@ -171,7 +160,7 @@ public:
 				if (map[j][i] != ' ') {
 					std::string mapHit;
 					mapHit = map[j][i];
-					Color c = colors[mapHit];
+					Color c = colorMap[mapHit];
 					rect(x, y, minimapBlockSize, c);
 				}
 			}
