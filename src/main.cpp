@@ -66,7 +66,6 @@ int main() {
 
         uint64_t frameEnd = SDL_GetPerformanceCounter();
         deltaTime = (double)((frameEnd - frameStart) / (double)perfFrequency);
-        // std::cout << "Delta Time: " << deltaTime << std::endl;
         
         // FPS counter
 
