@@ -42,3 +42,11 @@ void togglePause() {
 	currentGState = (currentGState == PAUSED) ? IN_GAME : PAUSED;
 }
 
+double normalizeAngle(double angle) {
+    const double twoPi = 2 * M_PI;
+    angle = fmod(angle, twoPi);
+    if (angle < 0) {
+        angle += twoPi;
+    }
+    return angle;
+}

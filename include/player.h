@@ -57,10 +57,12 @@ struct Player {
 	}
 
 	void turnLeft() {
-		a -= (M_PI / turningSpeed) * deltaTime;
+		double newAngle = a - (M_PI / turningSpeed) * deltaTime;
+		a = normalizeAngle(newAngle);
 	}
 
 	void turnRight() {
-		a += (M_PI / turningSpeed) * deltaTime;
+		double newAngle = a + (M_PI / turningSpeed) * deltaTime;
+		a = normalizeAngle(newAngle);
 	}
 };
