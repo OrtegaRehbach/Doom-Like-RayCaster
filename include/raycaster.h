@@ -54,7 +54,6 @@ public:
 			BLOCK_AMT_X = blockAmtX;
 			BLOCK_AMT_Y = blockAmtY;
 			loadedMap = map;
-			player.map = loadedMap;
 		} else {
 			std::cerr << "Failed to open the map file." << std::endl;
 		}

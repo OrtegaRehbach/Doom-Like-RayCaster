@@ -12,7 +12,6 @@ struct Player {
 	float movementSpeed;
 	float turningSpeed;
 	int blockSize;
-	std::vector<std::string> map;
 
 	void move(int _x, int _y) {
 		x = _x;
@@ -22,7 +21,7 @@ struct Player {
 	bool canMove(float newX, float newY) {
 		int i = static_cast<int>(newX / blockSize);
 		int j = static_cast<int>(newY / blockSize);
-		if (map[j][i] != ' ')
+		if (loadedMap[j][i] != ' ')
 			return false;
 		return true;
 	}
