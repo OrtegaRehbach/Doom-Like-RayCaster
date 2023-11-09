@@ -146,7 +146,8 @@ public:
 	void draw_minimap(int xPos = 0, int yPos = 0, int mapWidth = 500, int mapHeight = 500) {
 		int blockAmount = SCREEN_WIDTH / BLOCK;
 		int minimapBlockSize = mapWidth / blockAmount;
-		rect(xPos, yPos, mapWidth, B);	// Draw minimap background
+		int border = 2;
+		rect(xPos, yPos, mapWidth + border, B);	// Draw minimap background
 		for (int x = xPos; x < xPos + mapWidth; x += minimapBlockSize) {
 			for (int y = yPos; y < yPos + mapHeight; y += minimapBlockSize) {
 				int i = static_cast<int>((x - xPos) / minimapBlockSize);
