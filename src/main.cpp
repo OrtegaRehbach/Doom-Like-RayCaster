@@ -24,7 +24,7 @@ int main() {
     init();
 
     Raycaster r = {renderer};
-    r.load_map("../assets/map.txt");
+    r.load_map("../assets/maps/map.txt");
 
     uint64_t perfFrequency = SDL_GetPerformanceFrequency();
     uint64_t frameStart = SDL_GetPerformanceCounter();
