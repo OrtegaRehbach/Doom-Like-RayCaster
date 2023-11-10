@@ -7,16 +7,19 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Include the package search module
-find_package(PkgConfig REQUIRED)
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/)  
 
 # Find SDL2
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
+# Find SDL2_Image
+find_package(SDL2_image REQUIRED)
+include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
+
 # Find SDL_ttf
-pkg_check_modules(SDL2TTF REQUIRED SDL2_ttf>=2.0.0)
-include_directories(${SDL2_TTF_INCLUDE_DIRS})
+find_package(SDL_ttf REQUIRED)
+include_directories(${SDL_ttf_INCLUDE_DIRS})
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
     "${PROJECT_SOURCE_DIR}/src/*.cpp"
@@ -34,5 +37,6 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     ${SDL2_LIBRARIES}
+    ${SDL2_IMAGE_LIBRARIES}
     ${SDL2_TTF_LIBRARIES}
 )
