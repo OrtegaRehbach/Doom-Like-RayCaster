@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+set(SDL2_ttf_PATH "/usr/lib/x86_64-linux-gnu/libSDL2_ttf.so")
 
 # Find SDL2
 find_package(SDL2 REQUIRED)
@@ -38,5 +39,5 @@ target_include_directories(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
     ${SDL2_LIBRARIES}
     ${SDL2_IMAGE_LIBRARIES}
-    ${SDL2_TTF_LIBRARIES}
+    ${SDL2_ttf_PATH}
 )
