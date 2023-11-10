@@ -7,6 +7,7 @@
 #include <SDL2/SDL.h>
 
 #include "player.h"
+#include "imageloader.h"
 
 const Color B(0, 0, 0);
 const Color W;
@@ -36,7 +37,9 @@ public:
 		player.turningSpeed = 1.5f;
 		player.blockSize = BLOCK;
 
-		scale = 100;
+		scale = BLOCK;
+
+		texSize = 320;
 	}
 
 	void load_map(const std::string &filename) {
@@ -69,13 +72,33 @@ public:
 		SDL_Rect rect = {x, y, width, height};
 		SDL_RenderFillRect(renderer, &rect);
 	}
+	void rect(int x, int y, const std::string& mapHit, int width = BLOCK, int height = BLOCK) {
+		Color c = ImageLoader::getPixelColor(mapHit, x, y);
+		SDL_SetRenderDrawColor(renderer, c.r, c.g, c.b, c.a);
+		SDL_Rect rect = {x, y, width, height};
+		SDL_RenderFillRect(renderer, &rect);
+	}
 
 	void rect(int x, int y, int blockSize = BLOCK, Color c = W) {
 		rect(x, y, blockSize, blockSize, c);
 	}
 
+	void drawTextureMinimap(int x, int y, const std::string& mapHit, int width = BLOCK, int height = BLOCK) {
+		for (int rx = x; rx < x + width; rx++) {
+			for (int ry = y; ry < y + height; ry++) {
+				int tx = (rx - x) * (texSize / width);
+				int ty = (ry - y) * (texSize / height);
+
+				Color c = ImageLoader::getPixelColor(mapHit, tx, ty);
+				point(rx, ry, c);
+			}
+		}
+	}
+
+
 	Impact cast_ray(float a, bool drawRay = false, const Color& c = W, int drawDistance = MAX_RAY_DISTANCE, int blockSize = BLOCK) {
 		float d = 0;
+		int tx;
 		std::string mapHit;
 		while (d <= MAX_RAY_DISTANCE) {
 			int x = static_cast<int>(player.x + d * cos(a));
@@ -86,6 +109,10 @@ public:
 
 			if (map[j][i] != ' ') {
 				mapHit = map[j][i];
+				int hitX = x - i * blockSize;
+				int hitY = y - i * blockSize;
+				int maxHit = (hitX == 0 || hitX == blockSize - 1) ? hitY : hitX;
+				tx = maxHit * (texSize / blockSize);
 				break;
 			}
 
@@ -94,7 +121,7 @@ public:
 
 			d += 1;
 		}
-		return Impact{ d, colorMap[mapHit] };
+		return Impact{ d, "0", tx };
 	}
 
 	Impact cast_ray_from_point(
@@ -120,7 +147,7 @@ public:
 
 			d += 1;
 		}
-		return Impact{ d, colorMap[mapHit] };
+		return Impact{ d, mapHit, 0 };
 	}
 
 	void draw_stake(int x, float h, Color c) {
@@ -128,6 +155,16 @@ public:
 		float start = SCREEN_HEIGHT / 2.0f - h / 2.0f;
 		SDL_Rect rect = {x, static_cast<int>(start), 1, static_cast<int>(h)};
 		SDL_RenderFillRect(renderer, &rect);
+	}
+
+	void draw_textured_stake(int x, float h, Impact i) {
+		float start = SCREEN_HEIGHT / 2.0f - h / 2.0f;
+		float end = start + h;
+		for (int y = start; y < end; y++) {
+			int ty = (y - start) * (texSize / h);
+			Color c = ImageLoader::getPixelColor(i.mapHit, i.tx, ty) * get_brightness_smooth(i.d);
+			point(x, y, c);
+		}
 	}
 
 	float get_brightness(float d) {
@@ -150,6 +187,11 @@ public:
 		return 1.0f;
 	}
 
+	float get_brightness_smooth(float d) {
+		float minViewDistance = 16 * BLOCK; //350.0f;
+		return std::min(1.0f, std::exp(0.005f * (minViewDistance - d)));
+	}
+
 	void draw_minimap(int xPos = 0, int yPos = 0, int mapWidth = 500, int mapHeight = 500) {
 		int blockAmount = SCREEN_WIDTH / BLOCK;
 		int minimapBlockSizeX = mapWidth / blockAmount;
@@ -164,7 +206,7 @@ public:
 					std::string mapHit;
 					mapHit = map[j][i];
 					Color c = colorMap[mapHit];
-					rect(x, y, minimapBlockSizeX, minimapBlockSizeY, c);
+					drawTextureMinimap(x, y, mapHit, minimapBlockSizeX, minimapBlockSizeY);
 				}
 			}
 		}
@@ -184,12 +226,9 @@ public:
 			double a = player.a + player.fov / 2.0 - player.fov * i / SCREEN_WIDTH;
 			Impact impact = cast_ray(a);
 			float d = impact.d;
-			Color c = impact.c * get_brightness(d);
-
-			// int x = SCREEN_WIDTH * 2 - i;
 			int x = SCREEN_WIDTH - i;
 			float h = static_cast<float>(SCREEN_HEIGHT) / static_cast<float>(d * cos(a - player.a)) * static_cast<float>(scale);
-			draw_stake(x, h, c);
+			draw_textured_stake(x, h, impact);
 		}
 	}
 
@@ -202,4 +241,5 @@ private:
 	int scale;
 	SDL_Renderer *renderer;
 	std::vector<std::string> map;
+	int texSize;
 };

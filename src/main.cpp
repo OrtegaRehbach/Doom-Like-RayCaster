@@ -7,12 +7,14 @@
 #include "globals.h"
 #include "color.h"
 #include "raycaster.h"
+#include "imageloader.h"
 
 void init() {
     SDL_Init(SDL_INIT_VIDEO);
     window = SDL_CreateWindow("DOOM", 0, 0, screenDim.width, screenDim.height, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    ImageLoader::init();
 }
 
 void clear() {
@@ -22,9 +24,13 @@ void clear() {
 
 int main() {
     init();
-
     Raycaster r = {renderer};
     r.load_map("../assets/maps/map.txt");
+
+    ImageLoader::loadImage("0", "../assets/textures/wall.png");
+    ImageLoader::loadImage("1", "../assets/textures/wall.png");
+    ImageLoader::loadImage("2", "../assets/textures/wall.png");
+    ImageLoader::loadImage("3", "../assets/textures/wall.png");
 
     uint64_t perfFrequency = SDL_GetPerformanceFrequency();
     uint64_t frameStart = SDL_GetPerformanceCounter();
