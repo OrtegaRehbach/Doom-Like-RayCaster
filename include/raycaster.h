@@ -64,15 +64,14 @@ public:
 		SDL_RenderDrawPoint(renderer, x, y);
 	}
 
-	void rect(int x, int y, int blockSize = BLOCK, Color c = W) {
-		SDL_SetRenderDrawColor(renderer, c.r, c.g, c.b, c.a);
-		SDL_Rect rect = {x, y, blockSize, blockSize};
-		SDL_RenderFillRect(renderer, &rect);
-	}
 	void rect(int x, int y, int width = BLOCK, int height = BLOCK, Color c = W) {
 		SDL_SetRenderDrawColor(renderer, c.r, c.g, c.b, c.a);
 		SDL_Rect rect = {x, y, width, height};
 		SDL_RenderFillRect(renderer, &rect);
+	}
+
+	void rect(int x, int y, int blockSize = BLOCK, Color c = W) {
+		rect(x, y, blockSize, blockSize, c);
 	}
 
 	Impact cast_ray(float a, bool drawRay = false, const Color& c = W, int drawDistance = MAX_RAY_DISTANCE, int blockSize = BLOCK) {
