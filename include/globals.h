@@ -40,7 +40,8 @@ enum GameState {
 GameState currentGState;
 
 void togglePause() {
-	currentGState = (currentGState == PAUSED) ? IN_GAME : PAUSED;
+	if (currentGState == IN_GAME || currentGState == PAUSED)
+		currentGState = (currentGState == PAUSED) ? IN_GAME : PAUSED;
 }
 
 double normalizeAngle(double angle) {
