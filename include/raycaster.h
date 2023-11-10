@@ -121,7 +121,7 @@ public:
 
 			d += 1;
 		}
-		return Impact{ d, "0", tx };
+		return Impact{ d, mapHit, tx };
 	}
 
 	Impact cast_ray_from_point(
