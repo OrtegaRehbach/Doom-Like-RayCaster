@@ -69,6 +69,11 @@ public:
 		SDL_Rect rect = {x, y, blockSize, blockSize};
 		SDL_RenderFillRect(renderer, &rect);
 	}
+	void rect(int x, int y, int width = BLOCK, int height = BLOCK, Color c = W) {
+		SDL_SetRenderDrawColor(renderer, c.r, c.g, c.b, c.a);
+		SDL_Rect rect = {x, y, width, height};
+		SDL_RenderFillRect(renderer, &rect);
+	}
 
 	Impact cast_ray(float a, bool drawRay = false, const Color& c = W, int drawDistance = MAX_RAY_DISTANCE, int blockSize = BLOCK) {
 		float d = 0;
@@ -93,15 +98,18 @@ public:
 		return Impact{ d, colorMap[mapHit] };
 	}
 
-	Impact cast_ray_from_point(int x, int y, float a, bool drawRay = false, const Color& c = W, int drawDistance = MAX_RAY_DISTANCE, int blockSize = BLOCK) {
+	Impact cast_ray_from_point(
+		int x, int y, float a, bool drawRay = false, const Color& c = W, int drawDistance = MAX_RAY_DISTANCE, 
+		int blockSizeX = BLOCK, int blockSizeY = BLOCK
+	) {
 		float d = 0;
 		std::string mapHit;
 		while (d <= MAX_RAY_DISTANCE) {
 			int _x = static_cast<int>(x + d * cos(a));
 			int _y = static_cast<int>(y + d * sin(a));
 
-			int i = static_cast<int>(_x / blockSize);
-			int j = static_cast<int>(_y / blockSize);
+			int i = static_cast<int>(_x / blockSizeX);
+			int j = static_cast<int>(_y / blockSizeY);
 
 			if (map[j][i] != ' ') {
 				mapHit = map[j][i];
@@ -145,31 +153,31 @@ public:
 
 	void draw_minimap(int xPos = 0, int yPos = 0, int mapWidth = 500, int mapHeight = 500) {
 		int blockAmount = SCREEN_WIDTH / BLOCK;
-		int minimapBlockSize = mapWidth / blockAmount;
+		int minimapBlockSizeX = mapWidth / blockAmount;
+		int minimapBlockSizeY = mapHeight / blockAmount;
 		int border = 2;
-		rect(xPos, yPos, mapWidth + border, B);	// Draw minimap background
-		for (int x = xPos; x < xPos + mapWidth; x += minimapBlockSize) {
-			for (int y = yPos; y < yPos + mapHeight; y += minimapBlockSize) {
-				int i = static_cast<int>((x - xPos) / minimapBlockSize);
-				int j = static_cast<int>((y - yPos) / minimapBlockSize);
+		rect(xPos, yPos, mapWidth + border, mapHeight + border, B);	// Draw minimap background
+		for (int x = xPos; x < xPos + mapWidth; x += minimapBlockSizeX) {
+			for (int y = yPos; y < yPos + mapHeight; y += minimapBlockSizeY) {
+				int i = static_cast<int>((x - xPos) / minimapBlockSizeX);
+				int j = static_cast<int>((y - yPos) / minimapBlockSizeY);
 				if (map[j][i] != ' ') {
 					std::string mapHit;
 					mapHit = map[j][i];
 					Color c = colorMap[mapHit];
-					rect(x, y, minimapBlockSize, c);
+					rect(x, y, minimapBlockSizeX, minimapBlockSizeY, c);
 				}
 			}
 		}
-		float mapScaleFactorX = (float)mapWidth / (float)SCREEN_WIDTH;
-		float mapScaleFactorY = (float)mapHeight / (float)SCREEN_HEIGHT;
-		int playerPosX = xPos + mapScaleFactorX * player.x;
-		int playerPosY = yPos + mapScaleFactorY * player.y;
+		float mapScaleFactor = (float)mapWidth / (float)SCREEN_WIDTH;
+		int playerPosX = xPos + mapScaleFactor * player.x;
+		int playerPosY = yPos + mapScaleFactor * player.y;
 		for (int i = 1; i < mapWidth; i++) {
 			float a = player.a + player.fov / 2 - player.fov * i / mapWidth;
 			if (i == 1 || i == mapWidth - 1)
-				cast_ray_from_point(playerPosX, playerPosY, a, true, W, MAX_RAY_DISTANCE, minimapBlockSize);
+				cast_ray_from_point(playerPosX, playerPosY, a, true, W, MAX_RAY_DISTANCE, minimapBlockSizeX, minimapBlockSizeY);
 		}
-		cast_ray_from_point(playerPosX, playerPosY, player.a, true, Color(255, 0, 0), MAX_RAY_DISTANCE, minimapBlockSize);
+		cast_ray_from_point(playerPosX, playerPosY, player.a, true, Color(255, 0, 0), MAX_RAY_DISTANCE, minimapBlockSizeX, minimapBlockSizeY);
 	}
 
 	void draw_player_view() {
