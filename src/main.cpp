@@ -8,6 +8,7 @@
 #include "color.h"
 #include "raycaster.h"
 #include "imageloader.h"
+#include "text_renderer.h"
 
 void init() {
     SDL_Init(SDL_INIT_VIDEO);
@@ -26,6 +27,8 @@ int main() {
     init();
     Raycaster r = {renderer};
     r.load_map("../assets/maps/map.txt");
+
+    TextRenderer textRenderer(renderer, "../assets/fonts/Pixeled.ttf", 24);
 
     ImageLoader::loadImage("0", "../assets/textures/wall.png");
     ImageLoader::loadImage("1", "../assets/textures/wall.png");
@@ -73,6 +76,10 @@ int main() {
         r.render();
         if (currentGState == PAUSED) {
             r.rect(0, 0, screenDim.width, Color(16, 16, 16, 120));
+            std::string text = "PAUSED";
+            int textX = screenDim.centerX - (text.length() * 24 / 2);
+            int textY = screenDim.centerY - (screenDim.height / 4);
+            textRenderer.renderText(text, textX, textY, {255, 255, 255, 255});
         }
 
         SDL_RenderPresent(renderer);
