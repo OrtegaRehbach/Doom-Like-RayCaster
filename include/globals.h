@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SDL2/SDL.h>
 #include <stdint.h>
 #include <string>
 #include <vector>
@@ -23,7 +24,7 @@ struct Screen {
     int height;
 };
 
-Screen screenDim = {800, 800};
+Screen screenDim = {1000, 1000};
 
 struct Impact {
 	float d;
