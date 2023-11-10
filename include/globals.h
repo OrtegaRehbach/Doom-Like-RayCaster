@@ -28,7 +28,8 @@ Screen screenDim = {1000, 1000};
 
 struct Impact {
 	float d;
-	Color c;
+	std::string mapHit;
+	int tx;
 };
 
 enum GameState {
