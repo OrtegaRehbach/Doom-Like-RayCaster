@@ -5,15 +5,15 @@
 #include "globals.h"
 
 struct Player {
-	int x;
-	int y;
+	float x;
+	float y;
 	double a;
 	float fov;
 	float movementSpeed;
 	float turningSpeed;
 	int blockSize;
 
-	void move(int _x, int _y) {
+	void move(float _x, float _y) {
 		x = _x;
 		y = _y;
 	}

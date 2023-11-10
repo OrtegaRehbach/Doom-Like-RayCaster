@@ -26,8 +26,8 @@ public:
 	Raycaster(SDL_Renderer *renderer)
 		: renderer(renderer) {
 
-		player.x = BLOCK + BLOCK / 2;
-		player.y = BLOCK + BLOCK / 2;
+		player.x = BLOCK + BLOCK / 2.0f;
+		player.y = BLOCK + BLOCK / 2.0f;
 
 		player.a = M_PI / 4.0f;
 		player.fov = M_PI / 3.0f;
