@@ -32,6 +32,7 @@ struct Impact {
 };
 
 enum GameState {
+	MAIN_MENU,
 	IN_GAME,
 	PAUSED,
 	WIN
