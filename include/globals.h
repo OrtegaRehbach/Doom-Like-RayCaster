@@ -22,6 +22,13 @@ std::unordered_map<std::string, Color> colorMap = {
 struct Screen {
     int width;
     int height;
+	int centerX;
+	int centerY;
+
+	Screen(int w, int h) : width(w), height(h) {
+		centerX = width / 2;
+		centerY = height / 2;
+	}
 };
 
 Screen screenDim = {800, 800};
