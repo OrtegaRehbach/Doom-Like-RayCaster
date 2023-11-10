@@ -51,7 +51,6 @@ int main() {
         }
         const Uint8* KeyboardState = SDL_GetKeyboardState(nullptr);
         if (currentGState == IN_GAME) {
-            const Uint8* KeyboardState = SDL_GetKeyboardState(nullptr);
             if (KeyboardState[SDL_SCANCODE_LEFT] && !KeyboardState[SDL_SCANCODE_RIGHT])
                 r.player.turnLeft();
             if (KeyboardState[SDL_SCANCODE_RIGHT] && !KeyboardState[SDL_SCANCODE_LEFT])
