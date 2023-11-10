@@ -30,7 +30,7 @@ int main() {
     uint64_t frameStart = SDL_GetPerformanceCounter();
 
     bool running = true;
-    currentGState == IN_GAME;
+    currentGState = IN_GAME;
     while (running) {
         clear();
         SDL_Event event;
