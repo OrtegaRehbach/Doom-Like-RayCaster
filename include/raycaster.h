@@ -203,6 +203,7 @@ public:
 			for (int y = yPos; y < yPos + mapHeight; y += minimapBlockSizeY) {
 				int i = static_cast<int>((x - xPos) / minimapBlockSizeX);
 				int j = static_cast<int>((y - yPos) / minimapBlockSizeY);
+				if (i < 0 || j < 0) continue;
 				if (map[j][i] != ' ') {
 					std::string mapHit;
 					mapHit = map[j][i];
