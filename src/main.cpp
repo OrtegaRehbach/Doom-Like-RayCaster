@@ -18,6 +18,12 @@ void init() {
     ImageLoader::init();
 }
 
+void quit() {
+    ImageLoader::cleanup();
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+}
+
 void clear() {
     SDL_SetRenderDrawColor(renderer, B.r, B.g, B.b, B.a);
     SDL_RenderClear(renderer);
@@ -121,7 +127,6 @@ int main() {
         frameStart = frameEnd;
     }
 
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    
     exit(0);
 }
