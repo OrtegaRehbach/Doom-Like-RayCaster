@@ -227,8 +227,10 @@ public:
 			double rayAngle = (player.a + (player.fov / 2.0)) - (player.fov * (double)i / (double)SCREEN_WIDTH);
 			Impact impact = cast_ray(rayAngle);
 			float d = impact.d;
+			float p = d * cos(rayAngle) * cos(player.a) + d * sin(rayAngle) * sin(player.a);
+			int h = SCREEN_HEIGHT * scale / p;
 			int x = SCREEN_WIDTH - i;
-			float h = static_cast<float>(SCREEN_HEIGHT) / static_cast<float>(d * cos(a - player.a)) * static_cast<float>(scale);
+			// int h = (SCREEN_HEIGHT / (d * cos(rayAngle - player.a))) * scale;
 			draw_textured_stake(x, h, impact);
 		}
 	}
