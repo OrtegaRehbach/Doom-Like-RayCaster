@@ -43,6 +43,7 @@ int main() {
     while (running) {
         clear();
         SDL_Event event;
+        const Uint8* KeyboardState = SDL_GetKeyboardState(nullptr);
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 running = false;
@@ -58,7 +59,6 @@ int main() {
                 }
             }
         }
-        const Uint8* KeyboardState = SDL_GetKeyboardState(nullptr);
         if (currentGState == IN_GAME) {
             if (KeyboardState[SDL_SCANCODE_LEFT] && !KeyboardState[SDL_SCANCODE_RIGHT])
                 r.player.turnLeft();
