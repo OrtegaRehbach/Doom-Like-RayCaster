@@ -60,6 +60,16 @@ int main() {
                 if (event.key.keysym.sym == SDLK_p) {
                     togglePause();
                 }
+                if (event.key.keysym.sym == SDLK_i) {
+                    toggleInputMode();
+                }
+            }
+            if (event.type == SDL_MOUSEMOTION && inputMode == MOUSE_LOOK) { // Only works while mouse is inside the window
+                int moveDir = event.motion.xrel;
+                if (moveDir > 0)
+                    r.player.turnRightMouse();
+                else
+                    r.player.turnLeftMouse();
             }
         }
         if (currentGState == MAIN_MENU) {
