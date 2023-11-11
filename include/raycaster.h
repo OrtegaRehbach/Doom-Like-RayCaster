@@ -224,8 +224,8 @@ public:
 
 	void draw_player_view() {
 		for (int i = 0; i < SCREEN_WIDTH; i++) {
-			double a = player.a + player.fov / 2.0 - player.fov * i / SCREEN_WIDTH;
-			Impact impact = cast_ray(a);
+			double rayAngle = (player.a + (player.fov / 2.0)) - (player.fov * (double)i / (double)SCREEN_WIDTH);
+			Impact impact = cast_ray(rayAngle);
 			float d = impact.d;
 			int x = SCREEN_WIDTH - i;
 			float h = static_cast<float>(SCREEN_HEIGHT) / static_cast<float>(d * cos(a - player.a)) * static_cast<float>(scale);
