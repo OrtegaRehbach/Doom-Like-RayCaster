@@ -44,7 +44,7 @@ int main() {
     uint64_t perfFrequency = SDL_GetPerformanceFrequency();
     uint64_t frameStart = SDL_GetPerformanceCounter();
 
-    bool running = true;
+    running = true;
     currentGState = MAIN_MENU;
     while (running) {
         clear();

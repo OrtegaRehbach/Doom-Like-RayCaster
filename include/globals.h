@@ -19,6 +19,7 @@ std::unordered_map<std::string, Color> colorMap = {
 	{"3", Color(64, 169, 68)}
 };
 float mouseSensitivity = 10.0f;
+bool running;
 
 struct Screen {
     int width;
