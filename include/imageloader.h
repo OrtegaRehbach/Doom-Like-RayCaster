@@ -89,6 +89,28 @@ public:
         SDL_DestroyTexture(texture);
     }
 
+    // Render an image from a file path at a specific position
+    static void render(SDL_Renderer* renderer, const std::string& path, int x, int y) {
+        SDL_Surface* surface = IMG_Load(path.c_str());
+        if (!surface) {
+            throw std::runtime_error("Unable to load image! SDL_image Error: " + std::string(IMG_GetError()));
+        }
+
+        // Convert surface to texture
+        SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+        if (!texture) {
+            throw std::runtime_error("Unable to create texture from surface! SDL Error: " + std::string(SDL_GetError()));
+        }
+
+        // Set render destination and render the texture
+        SDL_Rect destRect = { x, y, surface->w, surface->h };
+        SDL_RenderCopy(renderer, texture, NULL, &destRect);
+
+        // Free the created surface and texture
+        SDL_FreeSurface(surface);
+        SDL_DestroyTexture(texture);
+    }
+
     // Clean up
     static void cleanup() {
         for (auto& pair : imageSurfaces) {
