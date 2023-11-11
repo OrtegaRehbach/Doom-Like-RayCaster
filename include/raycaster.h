@@ -39,7 +39,7 @@ public:
 
 		scale = BLOCK;
 
-		texSize = 320;
+		texSize = 225;
 	}
 
 	void load_map(const std::string &filename) {
