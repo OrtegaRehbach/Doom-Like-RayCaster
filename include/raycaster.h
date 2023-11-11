@@ -158,8 +158,8 @@ public:
 	}
 
 	void draw_textured_stake(int x, float h, Impact i) {
-		float start = SCREEN_HEIGHT / 2.0f - h / 2.0f;
-		float end = start + h;
+		int start = (SCREEN_HEIGHT / 2.0f) - (h / 2.0f);
+		int end = start + h;
 		for (int y = start; y < end; y++) {
 			if (y < 0 || y >= SCREEN_HEIGHT) continue;
 			int ty = (y - start) * (texSize / h);
