@@ -32,7 +32,7 @@ struct Screen {
 	}
 };
 
-Screen screenDim = {800, 800};
+Screen screenDim = {900, 900};
 
 struct Impact {
 	float d;
@@ -40,7 +40,7 @@ struct Impact {
 	int tx;
 };
 
-enum GameState {
+enum GAME_STATE {
 	MAIN_MENU,
 	IN_GAME,
 	PAUSED,
