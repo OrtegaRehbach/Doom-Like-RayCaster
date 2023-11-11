@@ -214,9 +214,9 @@ public:
 		float mapScaleFactor = (float)mapWidth / (float)SCREEN_WIDTH;
 		int playerPosX = xPos + mapScaleFactor * player.x;
 		int playerPosY = yPos + mapScaleFactor * player.y;
-		for (int i = 1; i < mapWidth; i++) {
+		for (int i = 0; i < mapWidth; i++) {
 			float a = player.a + player.fov / 2 - player.fov * i / mapWidth;
-			if (i == 1 || i == mapWidth - 1)
+			if (i == 0 || i == mapWidth - 1)
 				cast_ray_from_point(playerPosX, playerPosY, a, true, W, MAX_RAY_DISTANCE, minimapBlockSizeX, minimapBlockSizeY);
 		}
 		cast_ray_from_point(playerPosX, playerPosY, player.a, true, Color(255, 0, 0), MAX_RAY_DISTANCE, minimapBlockSizeX, minimapBlockSizeY);
