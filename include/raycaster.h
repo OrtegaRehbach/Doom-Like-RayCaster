@@ -161,6 +161,7 @@ public:
 		float start = SCREEN_HEIGHT / 2.0f - h / 2.0f;
 		float end = start + h;
 		for (int y = start; y < end; y++) {
+			if (y < 0 || y >= SCREEN_HEIGHT) continue;
 			int ty = (y - start) * (texSize / h);
 			Color c = ImageLoader::getPixelColor(i.mapHit, i.tx, ty) * get_brightness_smooth(i.d);
 			point(x, y, c);
