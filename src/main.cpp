@@ -39,7 +39,7 @@ int main() {
     uint64_t frameStart = SDL_GetPerformanceCounter();
 
     bool running = true;
-    currentGState = IN_GAME;
+    currentGState = MAIN_MENU;
     while (running) {
         clear();
         SDL_Event event;
@@ -54,10 +54,20 @@ int main() {
                     running = false;
                     break;
                 }
+                if (event.key.keysym.sym == SDLK_RETURN && currentGState == MAIN_MENU) {
+                    currentGState = IN_GAME;
+                }
                 if (event.key.keysym.sym == SDLK_p) {
                     togglePause();
                 }
             }
+        }
+        if (currentGState == MAIN_MENU) {
+            r.rect(0, 0, screenDim.width, screenDim.height, Color(24, 24, 24));
+            std::string title = "RAYCASTER";
+            int titleX = screenDim.centerX - (title.length() * 24 / 2);
+            int titleY = screenDim.centerY - (screenDim.height / 4);
+            textRenderer.renderText(title, titleX, titleY, {255, 255, 255, 255});
         }
         if (currentGState == IN_GAME) {
             if (KeyboardState[SDL_SCANCODE_LEFT] && !KeyboardState[SDL_SCANCODE_RIGHT])
@@ -72,9 +82,10 @@ int main() {
                 r.player.moveLeft();
             if (KeyboardState[SDL_SCANCODE_D] && !KeyboardState[SDL_SCANCODE_A])
                 r.player.moveRight(); 
+            r.render();
         }
-        r.render();
         if (currentGState == PAUSED) {
+            r.render();
             r.rect(0, 0, screenDim.width, Color(16, 16, 16, 120));
             std::string text = "PAUSED";
             int textX = screenDim.centerX - (text.length() * 24 / 2);
