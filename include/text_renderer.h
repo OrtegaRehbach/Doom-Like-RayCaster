@@ -9,6 +9,7 @@ public:
     ~TextRenderer();
 
     void renderText(const std::string& text, int x, int y, SDL_Color color);
+    void renderTextCentered(const char* text, int x, int y, const Color& color);
 
 private:
     SDL_Renderer* renderer;
@@ -35,6 +36,32 @@ void TextRenderer::renderText(const std::string& text, int x, int y, SDL_Color c
     SDL_Rect rect = { x, y, surface->w, surface->h };
     SDL_RenderCopy(renderer, texture, NULL, &rect);
 
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
+}
+
+// Render text centered at a specific position
+void TextRenderer::renderTextCentered(const char* text, int x, int y, const Color& color) {
+    SDL_Surface* surface = TTF_RenderText_Solid(font, text, { color.r, color.g, color.b });
+    if (!surface) {
+        throw std::runtime_error("Unable to render text! SDL_ttf Error: " + std::string(TTF_GetError()));
+    }
+
+    // Calculate the center position
+    int centerX = x - surface->w / 2;
+    int centerY = y - surface->h / 2;
+
+    // Convert surface to texture
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    if (!texture) {
+        throw std::runtime_error("Unable to create texture from surface! SDL Error: " + std::string(SDL_GetError()));
+    }
+
+    // Set render destination and render the texture
+    SDL_Rect destRect = { centerX, centerY, surface->w, surface->h };
+    SDL_RenderCopy(renderer, texture, NULL, &destRect);
+
+    // Free the created surface and texture
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
 }

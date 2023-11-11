@@ -102,10 +102,7 @@ int main() {
         if (currentGState == PAUSED) {
             r.render();
             r.rect(0, 0, screenDim.width, Color(16, 16, 16, 120));
-            std::string text = "PAUSED";
-            int textX = screenDim.centerX - (text.length() * 24 / 2);
-            int textY = screenDim.centerY - (screenDim.height / 4);
-            textRenderer.renderText(text, textX, textY, {255, 255, 255, 255});
+            textRenderer.renderTextCentered("PAUSED", screenDim.centerX, screenDim.centerY - screenDim.height / 4, {255, 255, 255, 255});
         }
 
         SDL_RenderPresent(renderer);
