@@ -53,6 +53,11 @@ enum INPUT_MODE {
 	MOUSE_LOOK
 } inputMode;
 
+enum MENU_OPTION {
+	PLAY,
+	QUIT
+} selectedOption;
+
 void togglePause() {
 	if (currentGState == IN_GAME || currentGState == PAUSED)
 		currentGState = (currentGState == PAUSED) ? IN_GAME : PAUSED;
@@ -61,6 +66,18 @@ void togglePause() {
 void toggleInputMode() {
 	if (currentGState == IN_GAME)
 		inputMode = (inputMode == KB_LOOK) ? MOUSE_LOOK : KB_LOOK;
+}
+
+void switchMenuOption(bool UP) {
+	if (currentGState == MAIN_MENU) {
+		if (UP) {
+			if (selectedOption == QUIT)
+				selectedOption = PLAY;
+		} else {
+			if (selectedOption == PLAY)
+				selectedOption = QUIT;
+		}
+	}
 }
 
 double normalizeAngle(double angle) {
