@@ -80,10 +80,9 @@ int main() {
         }
         if (currentGState == MAIN_MENU) {
             r.rect(0, 0, screenDim.width, screenDim.height, Color(24, 24, 24));
-            std::string title = "RAYCASTER";
-            int titleX = screenDim.centerX - (title.length() * 24 / 2);
+            int titleX = screenDim.centerX - (501 / 2);
             int titleY = screenDim.centerY - (screenDim.height / 4);
-            textRenderer.renderText(title, titleX, titleY, {255, 255, 255, 255});
+            ImageLoader::render(renderer, "../assets/textures/title.png", titleX, titleY);
         }
         if (currentGState == IN_GAME) {
             if (KeyboardState[SDL_SCANCODE_LEFT] && !KeyboardState[SDL_SCANCODE_RIGHT])
