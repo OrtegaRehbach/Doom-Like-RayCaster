@@ -61,13 +61,23 @@ int main() {
                     break;
                 }
                 if (event.key.keysym.sym == SDLK_RETURN && currentGState == MAIN_MENU) {
-                    currentGState = IN_GAME;
+                    if (selectedOption == PLAY)
+                        currentGState = IN_GAME;
+                    if (selectedOption == QUIT)
+                        running = false;
+                        break;
                 }
                 if (event.key.keysym.sym == SDLK_p) {
                     togglePause();
                 }
                 if (event.key.keysym.sym == SDLK_i) {
                     toggleInputMode();
+                }
+                if (event.key.keysym.sym == SDLK_UP) {
+                    switchMenuOption(true);
+                }
+                if (event.key.keysym.sym == SDLK_DOWN) {
+                    switchMenuOption(false);
                 }
             }
             if (event.type == SDL_MOUSEMOTION && inputMode == MOUSE_LOOK) { // Only works while mouse is inside the window
@@ -83,6 +93,10 @@ int main() {
             int titleX = screenDim.centerX - (501 / 2);
             int titleY = screenDim.centerY - (screenDim.height / 4);
             ImageLoader::render(renderer, "../assets/textures/title.png", titleX, titleY);
+            Color c1 = (selectedOption == PLAY) ? Color{255, 0, 0, 255} : Color{255, 255, 255, 255};
+            Color c2 = (selectedOption == QUIT) ? Color{255, 0, 0, 255} : Color{255, 255, 255, 255};
+            textRenderer.renderTextCentered("PLAY", screenDim.centerX, screenDim.centerY, c1);
+            textRenderer.renderTextCentered("QUIT", screenDim.centerX, screenDim.centerY + screenDim.height / 8, c2);
         }
         if (currentGState == IN_GAME) {
             if (KeyboardState[SDL_SCANCODE_LEFT] && !KeyboardState[SDL_SCANCODE_RIGHT])
