@@ -18,6 +18,7 @@ std::unordered_map<std::string, Color> colorMap = {
 	{"2", Color(220, 36, 33)},
 	{"3", Color(64, 169, 68)}
 };
+float mouseSensitivity = 10.0f;
 
 struct Screen {
     int width;
@@ -44,13 +45,21 @@ enum GameState {
 	IN_GAME,
 	PAUSED,
 	WIN
-};
+} currentGState;
 
-GameState currentGState;
+enum INPUT_MODE {
+	KB_LOOK,
+	MOUSE_LOOK
+} inputMode;
 
 void togglePause() {
 	if (currentGState == IN_GAME || currentGState == PAUSED)
 		currentGState = (currentGState == PAUSED) ? IN_GAME : PAUSED;
+}
+
+void toggleInputMode() {
+	if (currentGState == IN_GAME)
+		inputMode = (inputMode == KB_LOOK) ? MOUSE_LOOK : KB_LOOK;
 }
 
 double normalizeAngle(double angle) {
