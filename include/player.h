@@ -59,10 +59,24 @@ struct Player {
 	void turnLeft() {
 		double newAngle = a - (M_PI / turningSpeed) * deltaTime;
 		a = normalizeAngle(newAngle);
+		updateVectors();
+	}
+
+	void turnLeftMouse() {
+		double newAngle = a - (M_PI / turningSpeed) * (1 / mouseSensitivity) * deltaTime;
+		a = normalizeAngle(newAngle);
+		updateVectors();
 	}
 
 	void turnRight() {
 		double newAngle = a + (M_PI / turningSpeed) * deltaTime;
 		a = normalizeAngle(newAngle);
+		updateVectors();
+	}
+
+	void turnRightMouse() {
+		double newAngle = a + (M_PI / turningSpeed) * (1 / mouseSensitivity) * deltaTime;
+		a = normalizeAngle(newAngle);
+		updateVectors();
 	}
 };
