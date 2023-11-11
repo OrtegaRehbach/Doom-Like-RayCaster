@@ -67,7 +67,7 @@ public:
         return Color{color.r, color.g, color.b};
     }
 
-    static void render(SDL_Renderer* renderer, const std::string& key, int x, int y) {
+    static void renderFromMap(SDL_Renderer* renderer, const std::string& key, int x, int y) {
         auto it = imageSurfaces.find(key);
         if (it == imageSurfaces.end()) {
             throw std::runtime_error("Image key not found!");
