@@ -37,10 +37,10 @@ int main() {
 
     TextRenderer textRenderer(renderer, "../assets/fonts/Pixeled.ttf", 24);
 
-    ImageLoader::loadImage("0", "../assets/textures/wall.png");
-    ImageLoader::loadImage("1", "../assets/textures/wall2.jpg");
-    ImageLoader::loadImage("2", "../assets/textures/wall2.jpg");
-    ImageLoader::loadImage("3", "../assets/textures/wall2.jpg");
+    ImageLoader::loadImage("0", "../assets/textures/wall0.png");
+    ImageLoader::loadImage("1", "../assets/textures/wall1.png");
+    ImageLoader::loadImage("2", "../assets/textures/wall2.png");
+    ImageLoader::loadImage("3", "../assets/textures/wall2.png");
 
     uint64_t perfFrequency = SDL_GetPerformanceFrequency();
     uint64_t frameStart = SDL_GetPerformanceCounter();
