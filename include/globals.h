@@ -55,9 +55,9 @@ enum INPUT_MODE {
 } inputMode;
 
 enum MENU_OPTION {
-	PLAY,
-	QUIT
-} selectedOption;
+	M_PLAY,
+	M_QUIT,
+} selectedMenuOption;
 
 enum MAP_SELECTION {
 	MAP01,
@@ -77,11 +77,11 @@ void toggleInputMode() {
 void switchMenuOption(bool UP) {
 	if (currentGState == MAIN_MENU) {
 		if (UP) {
-			if (selectedOption == QUIT)
-				selectedOption = PLAY;
+			if (selectedMenuOption == M_QUIT)
+				selectedMenuOption = M_PLAY;
 		} else {
-			if (selectedOption == PLAY)
-				selectedOption = QUIT;
+			if (selectedMenuOption == M_PLAY)
+				selectedMenuOption = M_QUIT;
 		}
 	}
 }

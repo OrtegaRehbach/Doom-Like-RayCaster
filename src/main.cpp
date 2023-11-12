@@ -63,9 +63,9 @@ int main() {
                 }
                 if (event.key.keysym.sym == SDLK_RETURN) {
                     if (currentGState == MAIN_MENU) {
-                        if (selectedOption == PLAY)
+                        if (selectedMenuOption == M_PLAY)
                             currentGState = LEVEL_SELECT;
-                        if (selectedOption == QUIT)
+                        if (selectedMenuOption == M_QUIT)
                             running = false;
                             break;
                     }
@@ -105,8 +105,8 @@ int main() {
             int titleX = screenDim.centerX - (501 / 2);
             int titleY = screenDim.centerY - (screenDim.height / 4);
             ImageLoader::render(renderer, "../assets/textures/title.png", titleX, titleY);
-            Color c1 = (selectedOption == PLAY) ? Color{255, 0, 0, 255} : Color{255, 255, 255, 255};
-            Color c2 = (selectedOption == QUIT) ? Color{255, 0, 0, 255} : Color{255, 255, 255, 255};
+            Color c1 = (selectedMenuOption == M_PLAY) ? Color{255, 0, 0, 255} : Color{255, 255, 255, 255};
+            Color c2 = (selectedMenuOption == M_QUIT) ? Color{255, 0, 0, 255} : Color{255, 255, 255, 255};
             textRenderer.renderTextCentered("PLAY", screenDim.centerX, screenDim.centerY, c1);
             textRenderer.renderTextCentered("QUIT", screenDim.centerX, screenDim.centerY + screenDim.height / 8, c2);
         }
