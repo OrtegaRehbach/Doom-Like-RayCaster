@@ -32,7 +32,8 @@ void clear() {
 int main() {
     init();
     Raycaster r = {renderer};
-    r.load_map("../assets/maps/map.txt");
+    r.load_map("../assets/maps/map1.txt");
+    selectedMap = MAP01;
 
     TextRenderer textRenderer(renderer, "../assets/fonts/Pixeled.ttf", 24);
 
@@ -60,12 +61,21 @@ int main() {
                     running = false;
                     break;
                 }
-                if (event.key.keysym.sym == SDLK_RETURN && currentGState == MAIN_MENU) {
-                    if (selectedOption == PLAY)
+                if (event.key.keysym.sym == SDLK_RETURN) {
+                    if (currentGState == MAIN_MENU) {
+                        if (selectedOption == PLAY)
+                            currentGState = LEVEL_SELECT;
+                        if (selectedOption == QUIT)
+                            running = false;
+                            break;
+                    }
+                    if (currentGState == LEVEL_SELECT) {
+                        if (selectedMap == MAP01)
+                            r.load_map("../assets/maps/map.txt");
+                        if (selectedMap == MAP02)
+                            r.load_map("../assets/maps/map2.txt");
                         currentGState = IN_GAME;
-                    if (selectedOption == QUIT)
-                        running = false;
-                        break;
+                    }
                 }
                 if (event.key.keysym.sym == SDLK_p) {
                     togglePause();
@@ -75,9 +85,11 @@ int main() {
                 }
                 if (event.key.keysym.sym == SDLK_UP) {
                     switchMenuOption(true);
+                    switchLevelOption(true);
                 }
                 if (event.key.keysym.sym == SDLK_DOWN) {
                     switchMenuOption(false);
+                    switchLevelOption(false);
                 }
             }
             if (event.type == SDL_MOUSEMOTION && inputMode == MOUSE_LOOK) { // Only works while mouse is inside the window
@@ -97,6 +109,14 @@ int main() {
             Color c2 = (selectedOption == QUIT) ? Color{255, 0, 0, 255} : Color{255, 255, 255, 255};
             textRenderer.renderTextCentered("PLAY", screenDim.centerX, screenDim.centerY, c1);
             textRenderer.renderTextCentered("QUIT", screenDim.centerX, screenDim.centerY + screenDim.height / 8, c2);
+        }
+        if (currentGState == LEVEL_SELECT) {
+            r.rect(0, 0, screenDim.width, screenDim.height, Color(24, 24, 24));
+            textRenderer.renderTextCentered("LEVEL SELECT:", screenDim.centerX, screenDim.centerY - screenDim.height / 4, {255, 255, 255, 255});
+            Color c1 = (selectedMap == MAP01) ? Color{255, 0, 0, 255} : Color{255, 255, 255, 255};
+            Color c2 = (selectedMap == MAP02) ? Color{255, 0, 0, 255} : Color{255, 255, 255, 255};
+            textRenderer.renderTextCentered("MAP 1", screenDim.centerX, screenDim.centerY, c1);
+            textRenderer.renderTextCentered("MAP 2", screenDim.centerX, screenDim.centerY + screenDim.height / 8, c2);
         }
         if (currentGState == IN_GAME) {
             if (KeyboardState[SDL_SCANCODE_LEFT] && !KeyboardState[SDL_SCANCODE_RIGHT])

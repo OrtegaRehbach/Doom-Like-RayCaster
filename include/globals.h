@@ -43,6 +43,7 @@ struct Impact {
 
 enum GAME_STATE {
 	MAIN_MENU,
+	LEVEL_SELECT,
 	IN_GAME,
 	PAUSED,
 	WIN
@@ -57,6 +58,11 @@ enum MENU_OPTION {
 	PLAY,
 	QUIT
 } selectedOption;
+
+enum MAP_SELECTION {
+	MAP01,
+	MAP02
+} selectedMap;
 
 void togglePause() {
 	if (currentGState == IN_GAME || currentGState == PAUSED)
@@ -76,6 +82,18 @@ void switchMenuOption(bool UP) {
 		} else {
 			if (selectedOption == PLAY)
 				selectedOption = QUIT;
+		}
+	}
+}
+
+void switchLevelOption(bool UP) {
+	if (currentGState == LEVEL_SELECT) {
+		if (UP) {
+			if (selectedMap == MAP02)
+				selectedMap = MAP01;
+		} else {
+			if (selectedMap == MAP01)
+				selectedMap = MAP02;
 		}
 	}
 }
