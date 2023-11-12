@@ -76,6 +76,15 @@ int main() {
                             r.load_map("../assets/maps/map2.txt");
                         currentGState = IN_GAME;
                     }
+                    if (currentGState == PAUSED) {
+                        if (selectedPauseOption == P_RESUME)
+                            togglePause();
+                        if (selectedPauseOption == P_MENU)
+                            currentGState = MAIN_MENU;
+                        if (selectedPauseOption == P_QUIT)
+                            running = false;
+                            break;
+                    }
                 }
                 if (event.key.keysym.sym == SDLK_p) {
                     togglePause();
@@ -86,10 +95,12 @@ int main() {
                 if (event.key.keysym.sym == SDLK_UP) {
                     switchMenuOption(true);
                     switchLevelOption(true);
+                    switchPauseOption(true);
                 }
                 if (event.key.keysym.sym == SDLK_DOWN) {
                     switchMenuOption(false);
                     switchLevelOption(false);
+                    switchPauseOption(false);
                 }
             }
             if (event.type == SDL_MOUSEMOTION && inputMode == MOUSE_LOOK) { // Only works while mouse is inside the window
@@ -134,9 +145,16 @@ int main() {
             r.render();
         }
         if (currentGState == PAUSED) {
+            selectedPauseOption = P_RESUME;
             r.render();
             r.rect(0, 0, screenDim.width, Color(16, 16, 16, 120));
             textRenderer.renderTextCentered("PAUSED", screenDim.centerX, screenDim.centerY - screenDim.height / 4, {255, 255, 255, 255});
+            Color c1 = (selectedPauseOption == P_RESUME) ? Color{255, 0, 0, 255} : Color{255, 255, 255, 255};
+            Color c2 = (selectedPauseOption == P_MENU) ? Color{255, 0, 0, 255} : Color{255, 255, 255, 255};
+            Color c3 = (selectedPauseOption == P_QUIT) ? Color{255, 0, 0, 255} : Color{255, 255, 255, 255};
+            textRenderer.renderTextCentered("RESUME", screenDim.centerX, screenDim.centerY, c1);
+            textRenderer.renderTextCentered("MAIN MENU", screenDim.centerX, screenDim.centerY + screenDim.height / 8, c2);
+            textRenderer.renderTextCentered("QUIT", screenDim.centerX, screenDim.centerY + 2 * screenDim.height / 8, c3);
         }
 
         SDL_RenderPresent(renderer);

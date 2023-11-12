@@ -64,6 +64,12 @@ enum MAP_SELECTION {
 	MAP02
 } selectedMap;
 
+enum PAUSE_OPTION {
+	P_RESUME,
+	P_MENU,
+	P_QUIT
+} selectedPauseOption;
+
 void togglePause() {
 	if (currentGState == IN_GAME || currentGState == PAUSED)
 		currentGState = (currentGState == PAUSED) ? IN_GAME : PAUSED;
@@ -94,6 +100,22 @@ void switchLevelOption(bool UP) {
 		} else {
 			if (selectedMap == MAP01)
 				selectedMap = MAP02;
+		}
+	}
+}
+
+void switchPauseOption(bool UP) {
+	if (currentGState == PAUSED) {
+		if (UP) {
+			if (selectedPauseOption == P_QUIT)
+				selectedPauseOption = P_MENU;
+			else if (selectedPauseOption == P_MENU)
+				selectedPauseOption = P_RESUME;
+		} else {
+			if (selectedPauseOption == P_RESUME)
+				selectedPauseOption = P_MENU;
+			else if (selectedPauseOption == P_MENU)
+				selectedPauseOption = P_QUIT;
 		}
 	}
 }
