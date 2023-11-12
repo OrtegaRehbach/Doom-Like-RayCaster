@@ -39,10 +39,11 @@ public:
 
 		scale = BLOCK;
 
-		texSize = 225;
+		texSize = 128;
 	}
 
 	void load_map(const std::string &filename) {
+		map.clear();
 		int blockAmtX = 0;
 		int blockAmtY = 0;
 		std::ifstream file(filename);
