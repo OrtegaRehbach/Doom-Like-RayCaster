@@ -9,13 +9,25 @@ struct Player {
 	float y;
 	double a;
 	float fov;
+	float forwardX;
+	float forwardY;
+	float rightX;
+	float rightY;
 	float movementSpeed;
 	float turningSpeed;
 	int blockSize;
 
+	void updateVectors() {
+		forwardX = cos(a);
+		forwardY = sin(a);
+		rightX = forwardY;
+		rightY = -forwardX;
+	}
+
 	void move(float _x, float _y) {
 		x = _x;
 		y = _y;
+		updateVectors();
 	}
 
 	bool canMove(float newX, float newY) {
@@ -59,10 +71,24 @@ struct Player {
 	void turnLeft() {
 		double newAngle = a - (M_PI / turningSpeed) * deltaTime;
 		a = normalizeAngle(newAngle);
+		updateVectors();
+	}
+
+	void turnLeftMouse() {
+		double newAngle = a - (M_PI / turningSpeed) * (1 / mouseSensitivity) * deltaTime;
+		a = normalizeAngle(newAngle);
+		updateVectors();
 	}
 
 	void turnRight() {
 		double newAngle = a + (M_PI / turningSpeed) * deltaTime;
 		a = normalizeAngle(newAngle);
+		updateVectors();
+	}
+
+	void turnRightMouse() {
+		double newAngle = a + (M_PI / turningSpeed) * (1 / mouseSensitivity) * deltaTime;
+		a = normalizeAngle(newAngle);
+		updateVectors();
 	}
 };

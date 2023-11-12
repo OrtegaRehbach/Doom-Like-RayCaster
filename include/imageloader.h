@@ -1,4 +1,5 @@
 #pragma once
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdexcept>
@@ -66,7 +67,7 @@ public:
         return Color{color.r, color.g, color.b};
     }
 
-    static void render(SDL_Renderer* renderer, const std::string& key, int x, int y) {
+    static void renderFromMap(SDL_Renderer* renderer, const std::string& key, int x, int y) {
         auto it = imageSurfaces.find(key);
         if (it == imageSurfaces.end()) {
             throw std::runtime_error("Image key not found!");
@@ -85,6 +86,28 @@ public:
         SDL_RenderCopy(renderer, texture, NULL, &destRect);
 
         // Free the created texture
+        SDL_DestroyTexture(texture);
+    }
+
+    // Render an image from a file path at a specific position
+    static void render(SDL_Renderer* renderer, const std::string& path, int x, int y) {
+        SDL_Surface* surface = IMG_Load(path.c_str());
+        if (!surface) {
+            throw std::runtime_error("Unable to load image! SDL_image Error: " + std::string(IMG_GetError()));
+        }
+
+        // Convert surface to texture
+        SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+        if (!texture) {
+            throw std::runtime_error("Unable to create texture from surface! SDL Error: " + std::string(SDL_GetError()));
+        }
+
+        // Set render destination and render the texture
+        SDL_Rect destRect = { x, y, surface->w, surface->h };
+        SDL_RenderCopy(renderer, texture, NULL, &destRect);
+
+        // Free the created surface and texture
+        SDL_FreeSurface(surface);
         SDL_DestroyTexture(texture);
     }
 
