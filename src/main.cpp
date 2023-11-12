@@ -145,7 +145,6 @@ int main() {
             r.render();
         }
         if (currentGState == PAUSED) {
-            selectedPauseOption = P_RESUME;
             r.render();
             r.rect(0, 0, screenDim.width, Color(16, 16, 16, 120));
             textRenderer.renderTextCentered("PAUSED", screenDim.centerX, screenDim.centerY - screenDim.height / 4, {255, 255, 255, 255});

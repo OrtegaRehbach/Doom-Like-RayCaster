@@ -71,8 +71,10 @@ enum PAUSE_OPTION {
 } selectedPauseOption;
 
 void togglePause() {
-	if (currentGState == IN_GAME || currentGState == PAUSED)
+	if (currentGState == IN_GAME || currentGState == PAUSED) {
 		currentGState = (currentGState == PAUSED) ? IN_GAME : PAUSED;
+		selectedPauseOption = P_RESUME;
+	}
 }
 
 void toggleInputMode() {
