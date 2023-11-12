@@ -32,7 +32,7 @@ void clear() {
 int main() {
     init();
     Raycaster r = {renderer};
-    r.load_map("../assets/maps/map1.txt");
+    r.load_map("../assets/maps/map.txt");
     selectedMap = MAP01;
 
     TextRenderer textRenderer(renderer, "../assets/fonts/Pixeled.ttf", 24);
