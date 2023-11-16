@@ -42,8 +42,10 @@ int main() {
     ImageLoader::loadImage("2", "../assets/textures/wall2.png");
     ImageLoader::loadImage("3", "../assets/textures/wall2.png");
 
+    gameTicks = 0;
     uint64_t perfFrequency = SDL_GetPerformanceFrequency();
     uint64_t frameStart = SDL_GetPerformanceCounter();
+    double elapsedTime = 0.0;
 
     running = true;
     currentGState = MAIN_MENU;
@@ -168,9 +170,12 @@ int main() {
         float fps = 1 / deltaTime;
         std::ostringstream titleStream;
         if(deltaTime > 0) {
+            if (std::fmod(elapsedTime, 0.2) <= 0.1) // Not very accurate, but good enough
+                gameTicks++;
             titleStream << "FPS: " << static_cast<int>(fps);
             SDL_SetWindowTitle(window, titleStream.str().c_str());
         }
+        elapsedTime += deltaTime;
         frameStart = frameEnd;
     }
 

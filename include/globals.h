@@ -11,6 +11,7 @@
 SDL_Window *window;
 SDL_Renderer *renderer;
 double deltaTime;
+int gameTicks;
 std::vector<std::string> loadedMap;
 std::unordered_map<std::string, Color> colorMap = {
 	{"0", Color(3, 150, 208)},
