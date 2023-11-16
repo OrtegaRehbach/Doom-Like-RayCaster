@@ -238,7 +238,7 @@ public:
 		if (player.isMoving()) {
 			wpnAnimStartTick = (wpnAnimStartTick == 0) ? gameTicks : wpnAnimStartTick;
 			xOffset = 50 * sin((((gameTicks - wpnAnimStartTick) * 20) % 360) * M_PI / 180);
-			yOffset = 25 * 0.5f * sin(2 * ((((gameTicks - wpnAnimStartTick) * 20) % 360) * M_PI / 180) + M_PI_2) + 0.5f;
+			yOffset = 25 * 0.5f * sin((((2 * (gameTicks - wpnAnimStartTick) * 20) % 360) * M_PI / 180) + M_PI_2) + 0.5f;
 			currentWpnPosX = WPN_POS_X + xOffset;
 			currentWpnPosY = WPN_POS_Y + yOffset;
 		} else {
