@@ -20,6 +20,7 @@ void init() {
 
 void quit() {
     ImageLoader::cleanup();
+    SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
 }
@@ -179,6 +180,6 @@ int main() {
         frameStart = frameEnd;
     }
 
-    
+    quit();
     exit(0);
 }
