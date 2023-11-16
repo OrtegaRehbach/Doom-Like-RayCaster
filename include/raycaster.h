@@ -20,6 +20,12 @@ int BLOCK_AMT_X = 20;
 int BLOCK_AMT_Y = 20;
 int BLOCK = SCREEN_WIDTH / BLOCK_AMT_X;
 
+const int WPN_POS_X = screenDim.centerX;
+const int WPN_POS_Y = screenDim.height - 116;
+int currentWpnPosX = WPN_POS_X;
+int currentWpnPosY = WPN_POS_Y;
+int wpnAnimStartTick = 0;
+
 class Raycaster {
 public:
 	Player player;
@@ -225,9 +231,25 @@ public:
 	}
 
 	void draw_weapon_view() {
-		int xPos = screenDim.centerX;
-		int yPos = screenDim.height - 116;
-		ImageLoader::renderCentered(renderer, "../assets/sprites/gun.png", xPos, yPos);
+		int xOffset = 0;
+		if (player.isMoving()) {
+			wpnAnimStartTick = (wpnAnimStartTick == 0) ? gameTicks : wpnAnimStartTick;
+			xOffset = 50 * sin((((gameTicks - wpnAnimStartTick) * 20) % 360) * M_PI / 180);
+			currentWpnPosX = WPN_POS_X + xOffset;
+			currentWpnPosY = WPN_POS_Y;
+		} else {
+			int speed = 10;
+			if (currentWpnPosX > WPN_POS_X) {
+				currentWpnPosX -= speed;
+				currentWpnPosX = (currentWpnPosX < WPN_POS_X) ? WPN_POS_X : currentWpnPosX;
+			} else if (currentWpnPosX < WPN_POS_X) {
+				currentWpnPosX += speed;
+				currentWpnPosX = (currentWpnPosX > WPN_POS_X) ? WPN_POS_X : currentWpnPosX;
+			}
+			if (currentWpnPosX == WPN_POS_X && currentWpnPosY == WPN_POS_Y)
+				wpnAnimStartTick = 0;
+		}
+		ImageLoader::renderCentered(renderer, "../assets/sprites/gun.png", currentWpnPosX, currentWpnPosY);
 	}
 
 	void draw_player_view() {
