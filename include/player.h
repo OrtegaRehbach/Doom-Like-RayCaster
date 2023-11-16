@@ -91,4 +91,13 @@ struct Player {
 		a = normalizeAngle(newAngle);
 		updateVectors();
 	}
+
+	bool isMoving() {
+		return(	
+			KeyboardState[SDL_SCANCODE_W] || 
+			KeyboardState[SDL_SCANCODE_A] || 
+			KeyboardState[SDL_SCANCODE_D] || 
+			KeyboardState[SDL_SCANCODE_S]
+		);
+	}
 };
