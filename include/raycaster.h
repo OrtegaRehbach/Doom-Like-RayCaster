@@ -232,11 +232,13 @@ public:
 
 	void draw_weapon_view() {
 		int xOffset = 0;
+		int yOffset = 0;
 		if (player.isMoving()) {
 			wpnAnimStartTick = (wpnAnimStartTick == 0) ? gameTicks : wpnAnimStartTick;
 			xOffset = 50 * sin((((gameTicks - wpnAnimStartTick) * 20) % 360) * M_PI / 180);
+			yOffset = 25 * 0.5f * sin(2 * ((((gameTicks - wpnAnimStartTick) * 20) % 360) * M_PI / 180) + M_PI_2) + 0.5f;
 			currentWpnPosX = WPN_POS_X + xOffset;
-			currentWpnPosY = WPN_POS_Y;
+			currentWpnPosY = WPN_POS_Y + yOffset;
 		} else {
 			int speed = 10;
 			if (currentWpnPosX > WPN_POS_X) {
@@ -245,6 +247,13 @@ public:
 			} else if (currentWpnPosX < WPN_POS_X) {
 				currentWpnPosX += speed;
 				currentWpnPosX = (currentWpnPosX > WPN_POS_X) ? WPN_POS_X : currentWpnPosX;
+			}
+			if (currentWpnPosY > WPN_POS_Y) {
+				currentWpnPosY -= speed;
+				currentWpnPosY = (currentWpnPosY < WPN_POS_Y) ? WPN_POS_Y : currentWpnPosY;
+			} else if (currentWpnPosY < WPN_POS_Y) {
+				currentWpnPosY += speed;
+				currentWpnPosY = (currentWpnPosY > WPN_POS_Y) ? WPN_POS_Y : currentWpnPosY;
 			}
 			if (currentWpnPosX == WPN_POS_X && currentWpnPosY == WPN_POS_Y)
 				wpnAnimStartTick = 0;
