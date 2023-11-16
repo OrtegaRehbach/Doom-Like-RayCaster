@@ -224,6 +224,12 @@ public:
 		cast_ray_from_point(playerPosX, playerPosY, player.a, true, Color(255, 0, 0), MAX_RAY_DISTANCE, minimapBlockSizeX, minimapBlockSizeY);
 	}
 
+	void draw_weapon_view() {
+		int xPos = screenDim.centerX;
+		int yPos = screenDim.height - 116;
+		ImageLoader::renderCentered(renderer, "../assets/sprites/gun.png", xPos, yPos);
+	}
+
 	void draw_player_view() {
 		for (int i = 0; i < SCREEN_WIDTH; i++) {
 			double rayAngle = (player.a + (player.fov / 2.0)) - (player.fov * (double)i / (double)SCREEN_WIDTH);
@@ -235,6 +241,7 @@ public:
 			// int h = (SCREEN_HEIGHT / (d * cos(rayAngle - player.a))) * scale;
 			draw_textured_stake(x, h, impact);
 		}
+		draw_weapon_view();
 	}
 
 	void render() {		
