@@ -10,6 +10,7 @@
 
 SDL_Window *window;
 SDL_Renderer *renderer;
+const Uint8* KeyboardState;
 double deltaTime;
 int gameTicks;
 std::vector<std::string> loadedMap;

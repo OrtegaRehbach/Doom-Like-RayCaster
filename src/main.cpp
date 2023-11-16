@@ -52,7 +52,7 @@ int main() {
     while (running) {
         clear();
         SDL_Event event;
-        const Uint8* KeyboardState = SDL_GetKeyboardState(nullptr);
+        KeyboardState = SDL_GetKeyboardState(nullptr);
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 running = false;
