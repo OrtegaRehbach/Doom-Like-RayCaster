@@ -80,3 +80,13 @@ struct Color {
         return os;
     }
 };
+
+const Color C_WHITE     = Color(255, 255, 255);
+const Color C_BLACK     = Color(0, 0, 0);
+const Color C_GRAY      = Color(128, 128, 128);
+const Color C_RED       = Color(255, 0, 0);
+const Color C_GREEN     = Color(0, 255, 0);
+const Color C_BLUE      = Color(0, 0, 255);
+const Color C_YELLOW    = Color(255, 255, 0);
+const Color C_CYAN      = Color(0, 255, 255);
+const Color C_MAGENTA   = Color(255, 0, 255);
