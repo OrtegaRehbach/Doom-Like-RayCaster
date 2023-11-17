@@ -66,6 +66,7 @@ public:
 			loadedMap = map;
 			player.x = BLOCK + BLOCK / 2.0f;
 			player.y = BLOCK + BLOCK / 2.0f;
+			player.a = M_PI_4;
 		} else {
 			std::cerr << "Failed to open the map file." << std::endl;
 		}
