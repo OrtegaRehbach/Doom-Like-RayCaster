@@ -2,6 +2,7 @@
 #include <SDL_events.h>
 #include <SDL_render.h>
 #include <SDL_video.h>
+#include <SDL2/SDL_mixer.h> 
 #include <sstream>
 
 #include "globals.h"
@@ -9,6 +10,7 @@
 #include "raycaster.h"
 #include "imageloader.h"
 #include "text_renderer.h"
+#include "soundplayer.h"
 
 void init() {
     SDL_Init(SDL_INIT_VIDEO);
@@ -16,10 +18,12 @@ void init() {
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     ImageLoader::init();
+    SoundPlayer::init();
 }
 
 void quit() {
     ImageLoader::cleanup();
+    SoundPlayer::cleanup();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
@@ -42,6 +46,12 @@ int main() {
     ImageLoader::loadImage("1", "../assets/textures/wall1.png");
     ImageLoader::loadImage("2", "../assets/textures/wall2.png");
     ImageLoader::loadImage("3", "../assets/textures/wall2.png");
+
+    // Load the sound
+    SoundPlayer::load("applause", "../assets/sounds/applause_y.wav");
+
+    // Play the sound indefinitely
+    SoundPlayer::play("applause");
 
     gameTicks = 0;
     uint64_t perfFrequency = SDL_GetPerformanceFrequency();
