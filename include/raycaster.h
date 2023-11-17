@@ -120,7 +120,7 @@ public:
 			if (map[j][i] != ' ') {
 				mapHit = map[j][i];
 				int hitX = x - i * blockSize;
-				int hitY = y - i * blockSize;
+				int hitY = y - j * blockSize;
 				int maxHit = (hitX == 0 || hitX == blockSize - 1) ? hitY : hitX;
 				tx = maxHit * (texSize / blockSize);
 				break;
@@ -168,8 +168,8 @@ public:
 	}
 
 	void draw_textured_stake(int x, float h, Impact i) {
-		int start = (SCREEN_HEIGHT / 2.0f) - (h / 2.0f);
-		int end = start + h;
+		int start = std::round((SCREEN_HEIGHT / 2.0f) - (h / 2.0f));
+		int end = std::round(start + h);
 		for (int y = start; y < end; y++) {
 			if (y < 0 || y >= SCREEN_HEIGHT) continue;
 			int ty = (y - start) * (texSize / h);
