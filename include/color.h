@@ -50,8 +50,8 @@ struct Color {
         Uint8 _r = static_cast<Uint8>(r * scalar);
         Uint8 _g = static_cast<Uint8>(g * scalar);
         Uint8 _b = static_cast<Uint8>(b * scalar);
-        Uint8 _a = static_cast<Uint8>(a * scalar);
-        return Color(_r, _g, _b, _a);
+
+        return Color(_r, _g, _b);
     }
 
     Color operator*(Color other) const {
