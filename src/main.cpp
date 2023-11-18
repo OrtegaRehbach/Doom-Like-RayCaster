@@ -181,7 +181,7 @@ int main() {
         float fps = 1 / deltaTime;
         std::ostringstream titleStream;
         if(deltaTime > 0) {
-            if (std::fmod(elapsedTime, 0.2) <= 0.1) // Not very accurate, but good enough
+            if (std::fmod(elapsedTime, tickDuration) <= 0.1) // Not very accurate, but good enough
                 gameTicks++;
             titleStream << "FPS: " << static_cast<int>(fps);
             SDL_SetWindowTitle(window, titleStream.str().c_str());

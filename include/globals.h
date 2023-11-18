@@ -13,6 +13,7 @@ SDL_Renderer *renderer;
 const Uint8* KeyboardState;
 double deltaTime;
 int gameTicks;
+double tickDuration = 0.2;
 std::vector<std::string> loadedMap;
 std::unordered_map<std::string, Color> colorMap = {
 	{"0", Color(3, 150, 208)},
