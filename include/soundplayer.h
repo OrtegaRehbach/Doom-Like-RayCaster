@@ -27,7 +27,7 @@ public:
     }
 
     // Play a sound indefinitely using a key
-    static void play(const std::string& key) {
+    static void playIndefinitely(const std::string& key) {
         auto it = soundMap.find(key);
         if (it != soundMap.end()) {
             if (Mix_PlayChannel(-1, it->second, -1) == -1) {
