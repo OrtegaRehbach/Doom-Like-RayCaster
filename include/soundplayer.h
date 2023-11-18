@@ -12,7 +12,7 @@ public:
     // Initialize SDL_mixer
     static void init() {
         // Make sure to call this only once in your program
-        if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0) {
             throw std::runtime_error("Unable to initialize SDL_mixer! SDL_mixer Error: " + std::string(Mix_GetError()));
         }
     }
