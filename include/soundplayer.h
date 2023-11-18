@@ -38,6 +38,18 @@ public:
         }
     }
 
+    // Play a sound for a specified duration using a key
+    static void playTimed(const std::string& key, int durationInMilliseconds) {
+        auto it = soundMap.find(key);
+        if (it != soundMap.end()) {
+            if (Mix_PlayChannelTimed(-1, it->second, 0, durationInMilliseconds) == -1) {
+                throw std::runtime_error("Unable to play sound! SDL_mixer Error: " + std::string(Mix_GetError()));
+            }
+        } else {
+            throw std::runtime_error("Sound key not found!");
+        }
+    }
+
     // Clean up SDL_mixer
     static void cleanup() {
         // Make sure to call this only once in your program
