@@ -11,6 +11,7 @@
 #include "imageloader.h"
 #include "text_renderer.h"
 #include "soundplayer.h"
+#include "waiter.h"
 
 void init() {
     SDL_Init(SDL_INIT_VIDEO);
@@ -49,14 +50,15 @@ int main() {
 
     // Load the sound
     SoundPlayer::load("applause", "../assets/sounds/applause_y.wav");
-
-    // Play the sound indefinitely
-    SoundPlayer::play("applause");
+    SoundPlayer::load("pistol_shoot", "../assets/sounds/pistol_shoot.wav");
 
     gameTicks = 0;
     uint64_t perfFrequency = SDL_GetPerformanceFrequency();
     uint64_t frameStart = SDL_GetPerformanceCounter();
     double elapsedTime = 0.0;
+
+    bool shooting = false;
+    Waiter waiter = Waiter();
 
     running = true;
     currentGState = MAIN_MENU;
@@ -76,6 +78,7 @@ int main() {
                 }
                 if (event.key.keysym.sym == SDLK_RETURN) {
                     if (currentGState == MAIN_MENU) {
+                        SoundPlayer::playTimed("pistol_shoot", 1000);
                         if (selectedMenuOption == M_PLAY)
                             currentGState = LEVEL_SELECT;
                         if (selectedMenuOption == M_QUIT)
@@ -83,6 +86,7 @@ int main() {
                             break;
                     }
                     if (currentGState == LEVEL_SELECT) {
+                        SoundPlayer::playTimed("pistol_shoot", 1000);
                         if (selectedMap == MAP01)
                             r.load_map("../assets/maps/map.txt");
                         if (selectedMap == MAP02)
@@ -90,6 +94,7 @@ int main() {
                         currentGState = IN_GAME;
                     }
                     if (currentGState == PAUSED) {
+                        SoundPlayer::playTimed("pistol_shoot", 1000);
                         if (selectedPauseOption == P_RESUME)
                             togglePause();
                         if (selectedPauseOption == P_MENU)
@@ -154,7 +159,11 @@ int main() {
             if (KeyboardState[SDL_SCANCODE_A] && !KeyboardState[SDL_SCANCODE_D])
                 r.player.moveLeft();
             if (KeyboardState[SDL_SCANCODE_D] && !KeyboardState[SDL_SCANCODE_A])
-                r.player.moveRight(); 
+                r.player.moveRight();
+            if (KeyboardState[SDL_SCANCODE_SPACE]) {
+                if (!shooting) SoundPlayer::playTimed("pistol_shoot", 1000);
+                shooting = !waiter.wait(5);
+            }
             r.render();
         }
         if (currentGState == PAUSED) {
