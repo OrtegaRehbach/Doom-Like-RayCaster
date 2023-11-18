@@ -162,7 +162,7 @@ int main() {
                 r.player.moveRight();
             if (KeyboardState[SDL_SCANCODE_SPACE]) {
                 if (!shooting) SoundPlayer::playTimed("pistol_shoot", 1000);
-                shooting = !waiter.wait(5);
+                shooting = !waiter.wait(3);
             }
             r.render();
         }
