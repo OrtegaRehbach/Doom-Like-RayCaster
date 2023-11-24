@@ -48,9 +48,12 @@ int main() {
     ImageLoader::loadImage("2", "../assets/textures/wall2.png");
     ImageLoader::loadImage("3", "../assets/textures/wall2.png");
 
-    // Load the sound
-    SoundPlayer::load("applause", "../assets/sounds/applause_y.wav");
+    // Load sounds
     SoundPlayer::load("pistol_shoot", "../assets/sounds/pistol_shoot.wav");
+    // Load music
+    SoundPlayer::loadBackgroundMusic("../assets/sounds/music_drywall.wav");
+    // Play music
+    SoundPlayer::playBackgroundMusic();
 
     gameTicks = 0;
     uint64_t perfFrequency = SDL_GetPerformanceFrequency();
