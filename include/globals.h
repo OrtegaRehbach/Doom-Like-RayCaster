@@ -40,6 +40,8 @@ Screen screenDim = {900, 900};
 
 struct Impact {
 	float d;
+	int hitX;
+	int hitY;
 	std::string mapHit;
 	int tx;
 };

@@ -108,6 +108,8 @@ public:
 
 	Impact cast_ray(float a, bool drawRay = false, const Color& c = W, int drawDistance = MAX_RAY_DISTANCE, int blockSize = BLOCK) {
 		float d = 0;
+		int hitX;
+		int hitY;
 		int tx;
 		std::string mapHit;
 		while (d <= MAX_RAY_DISTANCE) {
@@ -119,8 +121,8 @@ public:
 
 			if (map[j][i] != ' ') {
 				mapHit = map[j][i];
-				int hitX = x - i * blockSize;
-				int hitY = y - j * blockSize;
+				hitX = x - i * blockSize;
+				hitY = y - j * blockSize;
 				int maxHit = (hitX == 0 || hitX == blockSize - 1) ? hitY : hitX;
 				tx = maxHit * (texSize / blockSize);
 				break;
@@ -131,7 +133,7 @@ public:
 
 			d += 1;
 		}
-		return Impact{ d, mapHit, tx };
+		return Impact{ d, hitX, hitY, mapHit, tx };
 	}
 
 	Impact cast_ray_from_point(
@@ -139,10 +141,12 @@ public:
 		int blockSizeX = BLOCK, int blockSizeY = BLOCK
 	) {
 		float d = 0;
+		int _x;
+		int _y;
 		std::string mapHit;
 		while (d <= MAX_RAY_DISTANCE) {
-			int _x = static_cast<int>(x + d * cos(a));
-			int _y = static_cast<int>(y + d * sin(a));
+			_x = static_cast<int>(x + d * cos(a));
+			_y = static_cast<int>(y + d * sin(a));
 
 			int i = static_cast<int>(_x / blockSizeX);
 			int j = static_cast<int>(_y / blockSizeY);
@@ -157,7 +161,7 @@ public:
 
 			d += 1;
 		}
-		return Impact{ d, mapHit, 0 };
+		return Impact{ d, _x, _y, mapHit, 0 };
 	}
 
 	void draw_stake(int x, float h, Color c) {
