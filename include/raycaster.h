@@ -278,11 +278,29 @@ public:
 			int x = SCREEN_WIDTH - i;
 			// int h = (SCREEN_HEIGHT / (d * cos(rayAngle - player.a))) * scale;
 			draw_textured_stake(x, h, impact);
+			draw_floor(impact, x, h);
+			draw_ceiling(impact, x, h);
 		}
 		draw_weapon_view();
 	}
 
-	void render() {		
+	void draw_floor(const Impact& impact, int x, int h) {
+		int startY = screenDim.centerY + h / 2;
+		for (int y = 0; y < SCREEN_HEIGHT - startY; y++) {
+			Color c = Color(50, 40, 30);
+			point(x, SCREEN_HEIGHT - y, c);
+		}
+	}
+
+	void draw_ceiling(const Impact& impact, int x, int h) {
+		int startY = 0;
+		for (int y = 0; y < screenDim.centerY - h / 2; y++) {
+			Color c = C_GRAY * 0.4f;
+			point(x, y, c);
+		}
+	}
+
+	void render() {
 		draw_player_view();
 		draw_minimap(0, 0, 200, 200);
 	}
