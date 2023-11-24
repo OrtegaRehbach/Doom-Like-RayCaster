@@ -7,6 +7,7 @@
 class SoundPlayer {
 private:
     static std::map<std::string, Mix_Chunk*> soundMap;
+    static Mix_Music* backgroundMusic;
 
 public:
     // Initialize SDL_mixer
@@ -50,17 +51,34 @@ public:
         }
     }
 
+    static void loadBackgroundMusic(const char* filePath) {
+        backgroundMusic = Mix_LoadMUS(filePath);
+        if (!backgroundMusic) {
+            throw std::runtime_error("Unable to load background music! SDL_mixer Error: " + std::string(Mix_GetError()));
+        }
+        Mix_VolumeMusic(MIX_MAX_VOLUME / 2); // Set music volume to half of the maximum
+    }
+
+    static void playBackgroundMusic() {
+        if (Mix_PlayMusic(backgroundMusic, -1) == -1) {
+            throw std::runtime_error("Unable to play background music! SDL_mixer Error: " + std::string(Mix_GetError()));
+        }
+    }
+
     // Clean up SDL_mixer
     static void cleanup() {
-        // Make sure to call this only once in your program
         for (auto& pair : soundMap) {
             if (pair.second) {
                 Mix_FreeChunk(pair.second);
             }
         }
         soundMap.clear();
+        // Free background music
+        if (backgroundMusic)
+            Mix_FreeMusic(backgroundMusic);
         Mix_Quit();
     }
 };
 
 std::map<std::string, Mix_Chunk*> SoundPlayer::soundMap;
+Mix_Music* SoundPlayer::backgroundMusic;
