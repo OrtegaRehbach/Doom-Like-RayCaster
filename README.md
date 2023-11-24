@@ -19,6 +19,6 @@ Software renderer basado en raycasting realizado como segundo proyecto del curso
 * `I`: Activar/Desactivar el movimiento con mouse *(Solo funciona dentro de la ventana del juego)
 
 ## Miscellaneous
-Song used: Drywall by Gustavo6046 & Decino\s\s
+Song used: Drywall by Gustavo6046 & Decino
 
 [![Watch the video](https://img.youtube.com/vi/oorlGz-Vqok/hqdefault.jpg)](https://youtu.be/oorlGz-Vqok "")
