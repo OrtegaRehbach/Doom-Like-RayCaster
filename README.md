@@ -6,7 +6,7 @@ Software renderer basado en raycasting realizado como segundo proyecto del curso
 ## Showcase
 ![Showcase gif](img/Raycaster_Capture.gif)  
 
-[![Youtube link](https://img.youtube.com/iv/dqgfYFQCn_w/hqdefault.jpg)](https://youtu.be/dqgfYFQCn_w "Showcase video")
+[![Youtube link](https://img.youtube.com/vi/dqgfYFQCn_w/hqdefault.jpg)](https://youtu.be/dqgfYFQCn_w "Showcase video")
 
 ## Controls
 #### General
