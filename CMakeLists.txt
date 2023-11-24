@@ -22,6 +22,10 @@ include_directories(${SDL2_IMAGE_INCLUDE_DIRS})
 find_package(SDL_ttf REQUIRED)
 include_directories(${SDL_ttf_INCLUDE_DIRS})
 
+# Set path for SDL_mixer
+set(SDL2_mixer_PATH "/usr/lib/x86_64-linux-gnu/libSDL2_mixer-2.0.so")
+
+
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
     "${PROJECT_SOURCE_DIR}/src/*.cpp"
 )
@@ -40,4 +44,5 @@ target_link_libraries(${PROJECT_NAME}
     ${SDL2_LIBRARIES}
     ${SDL2_IMAGE_LIBRARIES}
     ${SDL2_ttf_PATH}
+    ${SDL2_mixer_PATH}
 )
