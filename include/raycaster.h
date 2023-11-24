@@ -20,6 +20,12 @@ int BLOCK_AMT_X = 20;
 int BLOCK_AMT_Y = 20;
 int BLOCK = SCREEN_WIDTH / BLOCK_AMT_X;
 
+const int WPN_POS_X = screenDim.centerX;
+const int WPN_POS_Y = screenDim.height - 116;
+int currentWpnPosX = WPN_POS_X;
+int currentWpnPosY = WPN_POS_Y;
+int wpnAnimStartTick = 0;
+
 class Raycaster {
 public:
 	Player player;
@@ -58,6 +64,9 @@ public:
 			BLOCK_AMT_X = blockAmtX;
 			BLOCK_AMT_Y = blockAmtY;
 			loadedMap = map;
+			player.x = BLOCK + BLOCK / 2.0f;
+			player.y = BLOCK + BLOCK / 2.0f;
+			player.a = M_PI_4;
 		} else {
 			std::cerr << "Failed to open the map file." << std::endl;
 		}
@@ -99,6 +108,8 @@ public:
 
 	Impact cast_ray(float a, bool drawRay = false, const Color& c = W, int drawDistance = MAX_RAY_DISTANCE, int blockSize = BLOCK) {
 		float d = 0;
+		int hitX;
+		int hitY;
 		int tx;
 		std::string mapHit;
 		while (d <= MAX_RAY_DISTANCE) {
@@ -110,8 +121,8 @@ public:
 
 			if (map[j][i] != ' ') {
 				mapHit = map[j][i];
-				int hitX = x - i * blockSize;
-				int hitY = y - i * blockSize;
+				hitX = x - i * blockSize;
+				hitY = y - j * blockSize;
 				int maxHit = (hitX == 0 || hitX == blockSize - 1) ? hitY : hitX;
 				tx = maxHit * (texSize / blockSize);
 				break;
@@ -122,7 +133,7 @@ public:
 
 			d += 1;
 		}
-		return Impact{ d, mapHit, tx };
+		return Impact{ d, hitX, hitY, mapHit, tx };
 	}
 
 	Impact cast_ray_from_point(
@@ -130,10 +141,12 @@ public:
 		int blockSizeX = BLOCK, int blockSizeY = BLOCK
 	) {
 		float d = 0;
+		int _x;
+		int _y;
 		std::string mapHit;
 		while (d <= MAX_RAY_DISTANCE) {
-			int _x = static_cast<int>(x + d * cos(a));
-			int _y = static_cast<int>(y + d * sin(a));
+			_x = static_cast<int>(x + d * cos(a));
+			_y = static_cast<int>(y + d * sin(a));
 
 			int i = static_cast<int>(_x / blockSizeX);
 			int j = static_cast<int>(_y / blockSizeY);
@@ -148,7 +161,7 @@ public:
 
 			d += 1;
 		}
-		return Impact{ d, mapHit, 0 };
+		return Impact{ d, _x, _y, mapHit, 0 };
 	}
 
 	void draw_stake(int x, float h, Color c) {
@@ -159,8 +172,8 @@ public:
 	}
 
 	void draw_textured_stake(int x, float h, Impact i) {
-		int start = (SCREEN_HEIGHT / 2.0f) - (h / 2.0f);
-		int end = start + h;
+		int start = std::round((SCREEN_HEIGHT / 2.0f) - (h / 2.0f));
+		int end = std::round(start + h);
 		for (int y = start; y < end; y++) {
 			if (y < 0 || y >= SCREEN_HEIGHT) continue;
 			int ty = (y - start) * (texSize / h);
@@ -224,6 +237,37 @@ public:
 		cast_ray_from_point(playerPosX, playerPosY, player.a, true, Color(255, 0, 0), MAX_RAY_DISTANCE, minimapBlockSizeX, minimapBlockSizeY);
 	}
 
+	void draw_weapon_view() {
+		int xOffset = 0;
+		int yOffset = 0;
+		if (player.isMoving()) {
+			wpnAnimStartTick = (wpnAnimStartTick == 0) ? gameTicks : wpnAnimStartTick;
+			xOffset = 50 * sin((((gameTicks - wpnAnimStartTick) * 20) % 360) * M_PI / 180);
+			yOffset = 25 * 0.5f * sin((((2 * (gameTicks - wpnAnimStartTick) * 20) % 360) * M_PI / 180) + M_PI_2) + 0.5f;
+			currentWpnPosX = WPN_POS_X + xOffset;
+			currentWpnPosY = WPN_POS_Y + yOffset;
+		} else {
+			int speed = 10;
+			if (currentWpnPosX > WPN_POS_X) {
+				currentWpnPosX -= speed;
+				currentWpnPosX = (currentWpnPosX < WPN_POS_X) ? WPN_POS_X : currentWpnPosX;
+			} else if (currentWpnPosX < WPN_POS_X) {
+				currentWpnPosX += speed;
+				currentWpnPosX = (currentWpnPosX > WPN_POS_X) ? WPN_POS_X : currentWpnPosX;
+			}
+			if (currentWpnPosY > WPN_POS_Y) {
+				currentWpnPosY -= speed;
+				currentWpnPosY = (currentWpnPosY < WPN_POS_Y) ? WPN_POS_Y : currentWpnPosY;
+			} else if (currentWpnPosY < WPN_POS_Y) {
+				currentWpnPosY += speed;
+				currentWpnPosY = (currentWpnPosY > WPN_POS_Y) ? WPN_POS_Y : currentWpnPosY;
+			}
+			if (currentWpnPosX == WPN_POS_X && currentWpnPosY == WPN_POS_Y)
+				wpnAnimStartTick = 0;
+		}
+		ImageLoader::renderCentered(renderer, "../assets/sprites/gun.png", currentWpnPosX, currentWpnPosY);
+	}
+
 	void draw_player_view() {
 		for (int i = 0; i < SCREEN_WIDTH; i++) {
 			double rayAngle = (player.a + (player.fov / 2.0)) - (player.fov * (double)i / (double)SCREEN_WIDTH);
@@ -234,10 +278,29 @@ public:
 			int x = SCREEN_WIDTH - i;
 			// int h = (SCREEN_HEIGHT / (d * cos(rayAngle - player.a))) * scale;
 			draw_textured_stake(x, h, impact);
+			draw_floor(impact, x, h);
+			draw_ceiling(impact, x, h);
+		}
+		draw_weapon_view();
+	}
+
+	void draw_floor(const Impact& impact, int x, int h) {
+		int startY = screenDim.centerY + h / 2;
+		for (int y = 0; y < SCREEN_HEIGHT - startY; y++) {
+			Color c = Color(50, 40, 30);
+			point(x, SCREEN_HEIGHT - y, c);
 		}
 	}
 
-	void render() {		
+	void draw_ceiling(const Impact& impact, int x, int h) {
+		int startY = 0;
+		for (int y = 0; y < screenDim.centerY - h / 2; y++) {
+			Color c = C_GRAY * 0.4f;
+			point(x, y, c);
+		}
+	}
+
+	void render() {
 		draw_player_view();
 		draw_minimap(0, 0, 200, 200);
 	}

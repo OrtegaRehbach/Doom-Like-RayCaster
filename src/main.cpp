@@ -2,6 +2,7 @@
 #include <SDL_events.h>
 #include <SDL_render.h>
 #include <SDL_video.h>
+#include <SDL2/SDL_mixer.h> 
 #include <sstream>
 
 #include "globals.h"
@@ -9,17 +10,22 @@
 #include "raycaster.h"
 #include "imageloader.h"
 #include "text_renderer.h"
+#include "soundplayer.h"
+#include "waiter.h"
 
 void init() {
     SDL_Init(SDL_INIT_VIDEO);
-    window = SDL_CreateWindow("DOOM", 0, 0, screenDim.width, screenDim.height, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("DOOM", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screenDim.width, screenDim.height, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     ImageLoader::init();
+    SoundPlayer::init();
 }
 
 void quit() {
     ImageLoader::cleanup();
+    SoundPlayer::cleanup();
+    SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
 }
@@ -42,15 +48,27 @@ int main() {
     ImageLoader::loadImage("2", "../assets/textures/wall2.png");
     ImageLoader::loadImage("3", "../assets/textures/wall2.png");
 
+    // Load sounds
+    SoundPlayer::load("pistol_shoot", "../assets/sounds/pistol_shoot.wav");
+    // Load music
+    SoundPlayer::loadBackgroundMusic("../assets/sounds/music_drywall.wav");
+    // Play music
+    SoundPlayer::playBackgroundMusic();
+
+    gameTicks = 0;
     uint64_t perfFrequency = SDL_GetPerformanceFrequency();
     uint64_t frameStart = SDL_GetPerformanceCounter();
+    double elapsedTime = 0.0;
+
+    bool shooting = false;
+    Waiter waiter = Waiter();
 
     running = true;
     currentGState = MAIN_MENU;
     while (running) {
         clear();
         SDL_Event event;
-        const Uint8* KeyboardState = SDL_GetKeyboardState(nullptr);
+        KeyboardState = SDL_GetKeyboardState(nullptr);
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 running = false;
@@ -63,6 +81,7 @@ int main() {
                 }
                 if (event.key.keysym.sym == SDLK_RETURN) {
                     if (currentGState == MAIN_MENU) {
+                        SoundPlayer::playTimed("pistol_shoot", 1000);
                         if (selectedMenuOption == M_PLAY)
                             currentGState = LEVEL_SELECT;
                         if (selectedMenuOption == M_QUIT)
@@ -70,6 +89,7 @@ int main() {
                             break;
                     }
                     if (currentGState == LEVEL_SELECT) {
+                        SoundPlayer::playTimed("pistol_shoot", 1000);
                         if (selectedMap == MAP01)
                             r.load_map("../assets/maps/map.txt");
                         if (selectedMap == MAP02)
@@ -77,6 +97,7 @@ int main() {
                         currentGState = IN_GAME;
                     }
                     if (currentGState == PAUSED) {
+                        SoundPlayer::playTimed("pistol_shoot", 1000);
                         if (selectedPauseOption == P_RESUME)
                             togglePause();
                         if (selectedPauseOption == P_MENU)
@@ -141,7 +162,11 @@ int main() {
             if (KeyboardState[SDL_SCANCODE_A] && !KeyboardState[SDL_SCANCODE_D])
                 r.player.moveLeft();
             if (KeyboardState[SDL_SCANCODE_D] && !KeyboardState[SDL_SCANCODE_A])
-                r.player.moveRight(); 
+                r.player.moveRight();
+            if (KeyboardState[SDL_SCANCODE_SPACE]) {
+                if (!shooting) SoundPlayer::playTimed("pistol_shoot", 1000);
+                shooting = !waiter.wait(3);
+            }
             r.render();
         }
         if (currentGState == PAUSED) {
@@ -168,12 +193,15 @@ int main() {
         float fps = 1 / deltaTime;
         std::ostringstream titleStream;
         if(deltaTime > 0) {
+            if (std::fmod(elapsedTime, tickDuration) <= 0.1) // Not very accurate, but good enough
+                gameTicks++;
             titleStream << "FPS: " << static_cast<int>(fps);
             SDL_SetWindowTitle(window, titleStream.str().c_str());
         }
+        elapsedTime += deltaTime;
         frameStart = frameEnd;
     }
 
-    
+    quit();
     exit(0);
 }

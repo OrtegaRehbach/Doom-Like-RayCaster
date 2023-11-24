@@ -10,7 +10,10 @@
 
 SDL_Window *window;
 SDL_Renderer *renderer;
+const Uint8* KeyboardState;
 double deltaTime;
+int gameTicks;
+double tickDuration = 0.2;
 std::vector<std::string> loadedMap;
 std::unordered_map<std::string, Color> colorMap = {
 	{"0", Color(3, 150, 208)},
@@ -37,6 +40,8 @@ Screen screenDim = {900, 900};
 
 struct Impact {
 	float d;
+	int hitX;
+	int hitY;
 	std::string mapHit;
 	int tx;
 };
