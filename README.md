@@ -3,6 +3,10 @@
 
 Software renderer basado en raycasting realizado como segundo proyecto del curso de Gráficas por Computadora 2023.
 
+## Showcase
+![Showcase gif](img/Raycaster_Capture.gif)  
+
+[![Youtube link](https://img.youtube.com/iv/dqgfYFQCn_w/hqdefault.jpg)](https://youtu.be/dqgfYFQCn_w "Showcase video")
 
 ## Controls
 #### General
@@ -21,4 +25,4 @@ Software renderer basado en raycasting realizado como segundo proyecto del curso
 ## Miscellaneous
 Song used: Drywall by Gustavo6046 & Decino
 
-[![Watch the video](https://img.youtube.com/vi/oorlGz-Vqok/hqdefault.jpg)](https://youtu.be/oorlGz-Vqok "")
+[![Watch the video](https://img.youtube.com/vi/oorlGz-Vqok/hqdefault.jpg)](https://youtu.be/oorlGz-Vqok "Drywall by Gustavo6046 & Decino")
